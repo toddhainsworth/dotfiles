@@ -26,12 +26,13 @@ Plugin 'ervandew/supertab'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
+Plugin 'sjl/badwolf'
 call vundle#end()
 
 filetype plugin indent on
 
 " General -----------------------------------------------------------------;
-set background=dark
+colorscheme goodwolf
 
 " Use `jj` as esc
 inoremap jj <esc>
