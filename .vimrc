@@ -72,8 +72,8 @@ set shiftround
 set colorcolumn=110
 
 " Switching between splits
-nnoremap <leader>ww <C-w>k
-nnoremap <leader>wa <C-w>h
+nnoremap <leader>we <C-w>k
+nnoremap <leader>wq <C-w>h
 nnoremap <leader>wd <C-w>l
 nnoremap <leader>ws <C-w>j
 
@@ -83,3 +83,6 @@ nnoremap <leader>/ :Ack
 
 " CtrlP
 set wildignore+=*/doc/*
+
+" Fugitive
+nnoremap <leader>gb :Gblame<cr>
