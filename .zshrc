@@ -86,9 +86,6 @@ export EDITOR='vim'
 #
 export PATH=$PATH:$HOME/.composer/vendor/bin
 
-# I'm a sucker for Vim
-set -o vi
-
 alias showme="nautilus"
 alias fixi3="xrandr --output HDMI1 --auto --right-of HDMI2"
 alias ff="find -name"
