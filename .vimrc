@@ -20,32 +20,32 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
+Plugin 'tpope/vim-fireplace'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'ervandew/supertab'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'sjl/badwolf'
+Plugin 'pangloss/vim-javascript'
 call vundle#end()
 
 filetype plugin indent on
 
 " General -----------------------------------------------------------------;
-colorscheme goodwolf
 
-" Use `jj` as esc
-inoremap jj <esc>
-
-" Move sanely
+"Move sanely
 map j gj
 map k gk
+
+" Avoid typos
+nmap ; :
 
 " I prefer `B` and `E` to go to the beginning and end of lines
 map B ^
 map E $
 
 nnoremap <leader>hl :noh<cr>   " Disable search hilighting
+set mouse=a
 
 " Bits and pieces to make things `sane-ish`
 set wildmenu                   " Mode-line completion
@@ -71,11 +71,26 @@ set shiftround
 
 set colorcolumn=110
 
+if has("gui_running")
+  colorscheme desert
+else
+  colorscheme default
+endif
+
 " Switching between splits
-nnoremap <leader>we <C-w>k
+nnoremap <leader>we <C-w>l
 nnoremap <leader>wq <C-w>h
-nnoremap <leader>wd <C-w>l
+nnoremap <leader>ww <C-w>k
 nnoremap <leader>ws <C-w>j
+
+" Easily get back here
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" Easier exit
+inoremap jj <esc>
+
+" Show current file path
+nnoremap <leader>ff 1<C-G>
 
 " Plugin related ----------------------------------------------------------;
 " Ack.vim
@@ -83,6 +98,11 @@ nnoremap <leader>/ :Ack
 
 " CtrlP
 set wildignore+=*/doc/*
+let g:ctrlp_max_files=10000
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
+
+" Commentary
+nnoremap <leader>c<space> :Commentary<cr>
+vnoremap <leader>c<space> :Commentary<cr>
