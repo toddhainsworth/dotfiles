@@ -6,8 +6,6 @@ set nocompatible
 set number
 
 filetype off
-syntax enable
-syntax sync fromstart
 
 " No plans to use Vim anywhere where this'd cause issues
 set t_Co=256
@@ -27,9 +25,14 @@ Plugin 'ervandew/supertab'
 Plugin 'mileszs/ack.vim'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'pangloss/vim-javascript'
+Plugin 'rust-lang/rust.vim'
+Plugin 'mxw/vim-jsx'
+Plugin 'scrooloose/NERDTree'
 call vundle#end()
 
 filetype plugin indent on
+syntax enable
+syntax sync fromstart
 
 " General -----------------------------------------------------------------;
 
@@ -62,19 +65,20 @@ set hlsearch                   " Hilight while searching
 set incsearch                  " Incremental searching
 
 " Whitespace
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 set autoindent
 set smartindent
 set shiftround
+set relativenumber
 
-set colorcolumn=110
+set colorcolumn=140
 
 if has("gui_running")
   colorscheme desert
 else
-  colorscheme default
+  colorscheme delek
 endif
 
 " Switching between splits
@@ -98,7 +102,7 @@ nnoremap <leader>/ :Ack
 
 " CtrlP
 set wildignore+=*/doc/*
-let g:ctrlp_max_files=10000
+let g:ctrlp_max_files=0
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
@@ -106,3 +110,9 @@ nnoremap <leader>gb :Gblame<cr>
 " Commentary
 nnoremap <leader>c<space> :Commentary<cr>
 vnoremap <leader>c<space> :Commentary<cr>
+
+" vim-jsx
+let g:jsx_ext_required = 1
+
+" NERDTree
+nnoremap <leader>nt :NERDTreeToggle<CR>
