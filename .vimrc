@@ -19,7 +19,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'tpope/vim-fireplace'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-commentary'
 Plugin 'ervandew/supertab'
 Plugin 'mileszs/ack.vim'
@@ -28,6 +28,10 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'rust-lang/rust.vim'
 Plugin 'mxw/vim-jsx'
 Plugin 'scrooloose/NERDTree'
+Plugin 'fatih/vim-go'
+Plugin 'easymotion/vim-easymotion'
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plugin 'junegunn/fzf.vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -100,9 +104,15 @@ nnoremap <leader>ff 1<C-G>
 " Ack.vim
 nnoremap <leader>/ :Ack 
 
-" CtrlP
+" FZF
 set wildignore+=*/doc/*
-let g:ctrlp_max_files=0
+function! s:find_git_root()
+    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
+endfunction
+command! ProjectFiles execute 'Files' s:find_git_root() 
+
+nnoremap <c-p> :ProjectFiles<cr>
+let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
@@ -116,3 +126,8 @@ let g:jsx_ext_required = 1
 
 " NERDTree
 nnoremap <leader>nt :NERDTreeToggle<CR>
+
+" Go
+" Shoosh Vim up until we get a new point release in the EPEL
+let g:go_version_warning = 0
+let g:go_fmt_autosave = 0
