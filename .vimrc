@@ -112,7 +112,7 @@ endfunction
 command! ProjectFiles execute 'Files' s:find_git_root() 
 
 nnoremap <c-p> :ProjectFiles<cr>
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./'
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
