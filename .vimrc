@@ -32,6 +32,9 @@ Plugin 'fatih/vim-go'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plugin 'junegunn/fzf.vim'
+Plugin 'dikiaap/minimalist'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 call vundle#end()
 
 filetype plugin indent on
@@ -79,11 +82,7 @@ set relativenumber
 
 set colorcolumn=140
 
-if has("gui_running")
-  colorscheme desert
-else
-  colorscheme delek
-endif
+colorscheme minimalist
 
 " Switching between splits
 nnoremap <leader>we <C-w>l
@@ -100,9 +99,15 @@ inoremap jj <esc>
 " Show current file path
 nnoremap <leader>ff 1<C-G>
 
+" Remove gui elements
+set guioptions-=mTrL
+
 " Plugin related ----------------------------------------------------------;
 " Ack.vim
 nnoremap <leader>/ :Ack 
+if executable('ag')
+    let g:ackprg = 'ag --vimgrep'
+endif
 
 " FZF
 set wildignore+=*/doc/*
@@ -112,6 +117,7 @@ endfunction
 command! ProjectFiles execute 'Files' s:find_git_root() 
 
 nnoremap <c-p> :ProjectFiles<cr>
+nnoremap <leader>p :ProjectFiles<cr>
 let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./'
 
 " Fugitive
@@ -131,3 +137,8 @@ nnoremap <leader>nt :NERDTreeToggle<CR>
 " Shoosh Vim up until we get a new point release in the EPEL
 let g:go_version_warning = 0
 let g:go_fmt_autosave = 0
+
+" Airline + Minimalist VimTheme
+let g:airline_theme='minimalist'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
