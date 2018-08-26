@@ -36,6 +36,7 @@ Plug 'dikiaap/minimalist'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'w0rp/ale'
 call plug#end()
 
 filetype plugin indent on
@@ -111,7 +112,7 @@ set wildignore+=*/doc/*
 function! s:find_git_root()
     return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
 endfunction
-command! ProjectFiles execute 'Files' s:find_git_root() 
+command! ProjectFiles execute 'Files' s:find_git_root()
 
 nnoremap <c-p> :ProjectFiles<cr>
 nnoremap <c-b> :Buffers<cr>
@@ -135,7 +136,18 @@ nnoremap <leader>nf :NERDTreeFind<cr>
 " Go
 " Shoosh Vim up until we get a new point release in the EPEL
 let g:go_version_warning = 0
-let g:go_fmt_autosave = 0
+
+let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
 
 " Airline + Minimalist VimTheme
 let g:airline_theme='minimalist'
