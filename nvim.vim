@@ -1,20 +1,15 @@
-" Use existing .vimrc and runtime
-"set runtimepath^=~/.vim runtimepath+=~/.vim/after
-"let &packpath = &runtimepath
-"source ~/.vimrc
-
 " Setup -------------------------------------------------------------------;
 let mapleader = "\\"
 
 autocmd!
 set nocompatible
 set number
-
 filetype off
 
 " No plans to use Vim anywhere where this'd cause issues
 set t_Co=256
 
+" Plugin -------------------------------------------------------------------;
 call plug#begin('~/.vim/plugged')
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -37,26 +32,14 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'w0rp/ale'
+Plug 'Shougo/echodoc.vim'
 call plug#end()
 
 filetype plugin indent on
 syntax enable
 syntax sync fromstart
 
-" General -----------------------------------------------------------------;
-
-"Move sanely
-map j gj
-map k gk
-
-" Avoid typos
-nmap ; :
-
-" I prefer `B` and `E` to go to the beginning and end of lines
-map B ^
-map E $
-
-nnoremap <leader>hl :noh<cr>   " Disable search hilighting
+" Setting -----------------------------------------------------------------;
 set mouse=a
 
 set nowrap                     " I hardly ever want to wrap code
@@ -74,10 +57,48 @@ set autoindent
 set smartindent
 set shiftround
 set relativenumber
-
 set colorcolumn=140
 
+" Beautiful
 colorscheme minimalist
+
+" Keymap -----------------------------------------------------------------;
+" Move sanely
+map j gj
+map k gk
+
+" Avoid typos
+nmap ; :
+
+" I prefer `B` and `E` to go to the beginning and end of lines
+map B ^
+map E $
+
+nnoremap <leader>hl :noh<cr>   " Disable search hilighting
+
+" Centered search results
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
+
+" Slightly more magic searching
+nnoremap ? ?\v
+nnoremap / /\v
+cnoremap %s/ %sm/
+
+" Please stop...
+map <F1> <Esc>
+imap <F1> <Esc>
+
+" No arrow keys --- force yourself to use the home row
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>`
 
 " Switching between splits
 nnoremap <leader>we <C-w>l
@@ -97,7 +118,7 @@ nnoremap <leader>ff 1<C-G>
 " Remove gui elements
 set guioptions-=mTrL
 
-" Calls to external commands
+" Until I can be bothered to work out copy-paste with the system clipboard...
 nnoremap <leader>gg :!gedit %<cr>
 
 " Plugin related ----------------------------------------------------------;
@@ -148,6 +169,7 @@ let g:go_highlight_methods = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_structs = 1
 let g:go_highlight_types = 1
+let g:go_addtags_transform = "snakecase"
 
 " Airline + Minimalist VimTheme
 let g:airline_theme='minimalist'
@@ -157,7 +179,3 @@ let g:airline#extensions#tabline#enabled = 0
 " Deocomplete
 let g:deoplete#enable_at_startup = 1
 inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
-
-" Python debugging in Neovim
-let $NVIM_PYTHON_LOG_FILE="./nvim_log"
-let $NVIM_PYTHON_LOG_LEVEL="DEBUG"
