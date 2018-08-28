@@ -11,8 +11,8 @@ set t_Co=256
 
 " Plugin -------------------------------------------------------------------;
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-fireplace'
@@ -30,9 +30,12 @@ Plug 'junegunn/fzf.vim'
 Plug 'dikiaap/minimalist'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'ervandew/supertab'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'w0rp/ale'
 Plug 'Shougo/echodoc.vim'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'rust-lang/rust.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -58,7 +61,7 @@ set smartindent
 set shiftround
 set relativenumber
 set colorcolumn=140
-
+set tags=.git/tags
 " Beautiful
 colorscheme minimalist
 
@@ -98,7 +101,14 @@ nnoremap <down> <nop>
 inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
-inoremap <right> <nop>`
+inoremap <right> <nop>
+
+" Switch buffers with arrows instead
+nnoremap <left> :bp<cr>
+nnoremap <right> :bn<cr>
+
+" Toggle between buffers with "\\"
+nnoremap <leader><leader> <c-^>
 
 " Switching between splits
 nnoremap <leader>we <C-w>l
@@ -177,5 +187,18 @@ let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
 
 " Deocomplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+let g:deoplete#enable_at_startup = 0
+
+" Supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" Gutentags
+let g:gutentags_generate_on_missing = 1
+let g:gutentags_generate_on_new = 1
+let g:gutentags_generate_on_write = 1
+let g:gutentags_ctags_tagfile = ".git/tags"
+let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "var", "pub/static", "generated", ".git", "node_modules", "*.vim/bundle/*"]
+" let g:gutentags_trace = 1
+
+" Rust
+let g:rustfmt_autosave = 1
