@@ -3,7 +3,6 @@ let mapleader = "\\"
 
 autocmd!
 set nocompatible
-set number
 filetype off
 
 " No plans to use Vim anywhere where this'd cause issues
@@ -36,6 +35,9 @@ Plug 'w0rp/ale'
 Plug 'Shougo/echodoc.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'rust-lang/rust.vim'
+Plug 'machakann/vim-highlightedyank'
+Plug 'mtth/scratch.vim'
+Plug 'alvan/vim-php-manual'
 call plug#end()
 
 filetype plugin indent on
@@ -51,6 +53,9 @@ set undofile                   " Keep track of undoable changes even after buffe
 set undodir=~/.vim/undo        " Sane undo location
 set vb                         " That annoying bell is no more!
 set showcmd                    " Show incomplete command
+set number
+set relativenumber
+set exrc
 
 " Whitespace
 set tabstop=4
@@ -59,7 +64,6 @@ set expandtab
 set autoindent
 set smartindent
 set shiftround
-set relativenumber
 set colorcolumn=140
 set tags=.git/tags
 " Beautiful
@@ -202,3 +206,6 @@ let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "va
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" Keep project-specific RC's from doing scary stuff
+" set secure
