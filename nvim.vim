@@ -1,4 +1,4 @@
-" Setup -------------------------------------------------------------------;
+" Setu\ -------------------------------------------------------------------;
 let mapleader = "\\"
 
 autocmd!
@@ -30,7 +30,10 @@ Plug 'dikiaap/minimalist'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'ervandew/supertab'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
 Plug 'w0rp/ale'
 Plug 'Shougo/echodoc.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -38,6 +41,11 @@ Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mtth/scratch.vim'
 Plug 'alvan/vim-php-manual'
+Plug 'airblade/vim-rooter'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 call plug#end()
 
 filetype plugin indent on
@@ -142,14 +150,9 @@ if executable('ag')
     let g:ackprg = 'ag --vimgrep'
 endif
 
-" FZF
+" FZF and misc file finding
 set wildignore+=*/doc/*
-function! s:find_git_root()
-    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-endfunction
-command! ProjectFiles execute 'Files' s:find_git_root()
-
-nnoremap <c-p> :ProjectFiles<cr>
+nnoremap <c-p> :Files<cr>
 nnoremap <c-b> :Buffers<cr>
 nnoremap <c-t> :Tags<cr>
 let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./'
