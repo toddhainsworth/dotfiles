@@ -46,6 +46,12 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
+Plug 'junegunn/vim-after-object'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
 call plug#end()
 
 filetype plugin indent on
@@ -196,9 +202,6 @@ let g:airline_theme='minimalist'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 0
 
-" Deocomplete
-let g:deoplete#enable_at_startup = 0
-
 " Supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
 
@@ -213,5 +216,9 @@ let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "va
 " Rust
 let g:rustfmt_autosave = 1
 
-" Keep project-specific RC's from doing scary stuff
-" set secure
+" Ncm2
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
