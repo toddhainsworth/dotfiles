@@ -152,10 +152,13 @@ endif
 
 " FZF and misc file finding
 set wildignore+=*/doc/*
-nnoremap <c-p> :Files<cr>
-nnoremap <c-b> :Buffers<cr>
-nnoremap <c-t> :Tags<cr>
-let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./'
+nnoremap <c-p> :Files<cr> " Search for files
+nnoremap <c-b> :Buffers<cr> " Search for open buffers
+nnoremap <c-t> :Tags<cr> " Search for tags
+nnoremap <c-f> :Ag<cr> " Search for text in entire project
+nnoremap <c-c> :Commits<cr> " Search for commits
+nnoremap <c-C> :BCommits<cr> " Search for commits of the current buffer
+let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
