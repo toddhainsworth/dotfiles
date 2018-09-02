@@ -47,11 +47,6 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'junegunn/vim-after-object'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
 call plug#end()
 
 filetype plugin indent on
@@ -158,12 +153,12 @@ endif
 
 " FZF and misc file finding
 set wildignore+=*/doc/*
-nnoremap <c-p> :Files<cr> " Search for files
-nnoremap <c-b> :Buffers<cr> " Search for open buffers
-nnoremap <c-t> :Tags<cr> " Search for tags
-nnoremap <c-f> :Ag<cr> " Search for text in entire project
-nnoremap <c-c> :Commits<cr> " Search for commits
-nnoremap <c-C> :BCommits<cr> " Search for commits of the current buffer
+nnoremap <c-p> :Files<cr>
+nnoremap <c-b> :Buffers<cr>
+nnoremap <c-t> :Tags<cr>
+nnoremap <c-f> :Ag<cr>
+nnoremap <c-c> :Commits<cr>
+nnoremap <c-C> :BCommits<cr>
 let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
 
 " Fugitive
@@ -213,12 +208,6 @@ let g:gutentags_ctags_tagfile = ".git/tags"
 let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "var", "pub/static", "generated", ".git", "node_modules", "*.vim/bundle/*"]
 " let g:gutentags_trace = 1
 
+
 " Rust
 let g:rustfmt_autosave = 1
-
-" Ncm2
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
