@@ -29,11 +29,6 @@ Plug 'junegunn/fzf.vim'
 Plug 'dikiaap/minimalist'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ervandew/supertab'
-Plug 'ncm2/ncm2'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
 Plug 'w0rp/ale'
 Plug 'Shougo/echodoc.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -42,13 +37,19 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'mtth/scratch.vim'
 Plug 'alvan/vim-php-manual'
 Plug 'airblade/vim-rooter'
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'junegunn/vim-after-object'
-Plug 'ervandew/supertab'
 Plug 'chriskempson/base16-vim'
+Plug 'StanAngeloff/php.vim'
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/ncm-phpactor'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-path'
+" Requiresd PHP7 - use scl to change
+Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
+Plug 'phpactor/ncm2-phpactor'
 call plug#end()
 
 filetype plugin indent on
@@ -211,6 +212,37 @@ let g:gutentags_generate_on_new = 1
 let g:gutentags_generate_on_write = 1
 let g:gutentags_ctags_tagfile = ".tags"
 let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "var", "pub/static", "generated", ".git", "node_modules", "*.vim/bundle/*"]
+
+" NCM
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+inoremap <expr> <CR> pumvisible() ? "\<c-y>\<cr>" : "\<CR>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" PHPactor
+let g:phpactorPhpBin = "/opt/rh/rh-php70/root/usr/bin/php"
+let g:phpactorOmniError = v:true
+autocmd FileType php setlocal omnifunc=phpactor#Complete
+
+" Include use statement
+nmap <Leader>u :call phpactor#UseAdd()<CR>
+" Invoke the context menu
+nmap <Leader>mm :call phpactor#ContextMenu()<CR>
+" Invoke the navigation menu
+nmap <Leader>nn :call phpactor#Navigate()<CR>
+" Goto definition of class or class member under the cursor
+nmap <Leader>o :call phpactor#GotoDefinition()<CR>
+" Transform the classes in the current file
+nmap <Leader>tt :call phpactor#Transform()<CR>
+" Generate a new class (replacing the current file)
+nmap <Leader>cc :call phpactor#ClassNew()<CR>
+" Extract expression (normal mode)
+nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
+" Extract expression from selection
+vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
+" Extract method from selection
+vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 
 " Rust
 let g:rustfmt_autosave = 1
