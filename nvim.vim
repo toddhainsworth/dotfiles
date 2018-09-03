@@ -1,4 +1,4 @@
-" Setu\ -------------------------------------------------------------------;
+" Setup -------------------------------------------------------------------;
 let mapleader = "\\"
 
 autocmd!
@@ -47,6 +47,8 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'junegunn/vim-after-object'
+Plug 'ervandew/supertab'
+Plug 'chriskempson/base16-vim'
 call plug#end()
 
 filetype plugin indent on
@@ -74,7 +76,7 @@ set autoindent
 set smartindent
 set shiftround
 set colorcolumn=140
-set tags=.git/tags
+set tags=.tags
 " Beautiful
 colorscheme minimalist
 
@@ -128,6 +130,9 @@ nnoremap <leader>we <C-w>l
 nnoremap <leader>wq <C-w>h
 nnoremap <leader>ww <C-w>k
 nnoremap <leader>ws <C-w>j
+
+nnoremap <leader>vs :vsplit<cr>
+nnoremap <leader>ss :split<cr>
 
 " Easily get back here
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -204,10 +209,8 @@ let g:SuperTabDefaultCompletionType = "<c-n>"
 let g:gutentags_generate_on_missing = 1
 let g:gutentags_generate_on_new = 1
 let g:gutentags_generate_on_write = 1
-let g:gutentags_ctags_tagfile = ".git/tags"
+let g:gutentags_ctags_tagfile = ".tags"
 let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "var", "pub/static", "generated", ".git", "node_modules", "*.vim/bundle/*"]
-" let g:gutentags_trace = 1
-
 
 " Rust
 let g:rustfmt_autosave = 1
