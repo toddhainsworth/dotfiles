@@ -14,15 +14,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
-Plug 'tpope/vim-fireplace'
-Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
 Plug 'mileszs/ack.vim'
-Plug 'vim-ruby/vim-ruby'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'scrooloose/NERDTree'
-Plug 'fatih/vim-go'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -30,7 +26,6 @@ Plug 'dikiaap/minimalist'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'Shougo/echodoc.vim'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
@@ -216,7 +211,6 @@ let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "va
 " NCM
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
-inoremap <expr> <CR> pumvisible() ? "\<c-y>\<cr>" : "\<CR>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
