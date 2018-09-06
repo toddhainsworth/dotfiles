@@ -34,6 +34,9 @@ new_window 1pixel
 # start a terminal
 bindsym $mod+Return exec gnome-terminal
 
+# Lock with i3lock
+bindsym $mod+l exec i3lock
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
@@ -161,7 +164,17 @@ workspace "1" output DP2-1
 workspace "2" output DP2-2
 workspace "3" output DP2-2
 workspace "4" output DP2-2
+workspace "5" output DP2-2
+workspace "6" output DP2-2
+workspace "7" output DP2-2
+workspace "8" output DP2-2
+workspace "9" output DP2-2
+workspace "10" output DP2-2
 
+# Volume controls
 bindsym Mod1+comma exec amixer set Master -q 5%-
 bindsym Mod1+period exec amixer set Master -q 5%+
+
+# Don't follow the mouse
+focus_follows_mouse no
 
