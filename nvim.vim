@@ -29,22 +29,15 @@ Plug 'w0rp/ale'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'mtth/scratch.vim'
-Plug 'alvan/vim-php-manual'
 Plug 'airblade/vim-rooter'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'junegunn/vim-after-object'
-Plug 'chriskempson/base16-vim'
-Plug 'StanAngeloff/php.vim'
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/ncm-phpactor'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
-" Requiresd PHP7 - use scl to change
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
-Plug 'phpactor/ncm2-phpactor'
 call plug#end()
 
 filetype plugin indent on
@@ -65,8 +58,8 @@ set relativenumber
 set exrc
 
 " Whitespace
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set autoindent
 set smartindent
@@ -160,7 +153,7 @@ nnoremap <c-t> :Tags<cr>
 nnoremap <c-f> :Ag<cr>
 nnoremap <c-c> :Commits<cr>
 nnoremap <c-C> :BCommits<cr>
-let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+let $FZF_DEFAULT_COMMAND = 'ag -g "" ./' " Use AG for searching and makes ure to include 'vendor/' in that search
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
@@ -240,3 +233,14 @@ vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" Language Server
+
+let g:LanguageClient_settingsPath = "/home/todd/.vim/settings.json"
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['env', 'CARGO_TARGET_DIR=/Users/todd/.cargo/bin/rls', 'rls'],
+    \ }
+let g:LanguageClient_autoStart = 1
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
