@@ -235,10 +235,10 @@ vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 let g:rustfmt_autosave = 1
 
 " Language Server
-
 let g:LanguageClient_settingsPath = "/home/todd/.vim/settings.json"
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['env', 'CARGO_TARGET_DIR=/Users/todd/.cargo/bin/rls', 'rls'],
+    \ 'python': ['pyls'],
     \ }
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
