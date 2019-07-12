@@ -15,7 +15,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
-Plug 'mileszs/ack.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'scrooloose/NERDTree'
@@ -42,9 +41,14 @@ Plug 'roxma/ncm-phpactor'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
+Plug 'mileszs/ack.vim'
 " Requiresd PHP7 - use scl to change
 Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 Plug 'phpactor/ncm2-phpactor'
+Plug 'vim-vdebug/vdebug'
+Plug 'tpope/vim-repeat'
+Plug 'NLKNguyen/pipe.vim'
+Plug 'NLKNguyen/pipe-mysql.vim'
 call plug#end()
 
 filetype plugin indent on
@@ -107,12 +111,12 @@ map <F1> <Esc>
 imap <F1> <Esc>
 
 " No arrow keys --- force yourself to use the home row
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
+nmap <up> <nop>
+nmap <down> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
 
 " Switch buffers with arrows instead
 nnoremap <left> :bp<cr>
@@ -136,8 +140,14 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " Easier exit
 inoremap jj <esc>
 
+" Leader+a to close other splits
+nnoremap <leader>o :only<cr>
+
 " Show current file path
 nnoremap <leader>ff 1<C-G>
+
+nnoremap <leader>zz :tabedit %<cr>
+nnoremap <leader>ZZ :tabclose<cr>
 
 " Remove gui elements
 set guioptions-=mTrL
@@ -146,12 +156,6 @@ set guioptions-=mTrL
 nnoremap <leader>gg :!gedit %<cr>
 
 " Plugin related ----------------------------------------------------------;
-" Ack.vim
-nnoremap <leader>/ :Ack 
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
-
 " FZF and misc file finding
 set wildignore+=*/doc/*
 nnoremap <c-p> :Files<cr>
@@ -164,6 +168,7 @@ let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./' " Use AG for searching and make
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gd :Gdiff<cr>
 
 " Commentary
 nnoremap <leader>c<space> :Commentary<cr>
@@ -176,37 +181,52 @@ let g:jsx_ext_required = 1
 nnoremap <leader>nt :NERDTreeToggle<CR>
 nnoremap <leader>nf :NERDTreeFind<cr>
 
+" Ack.vim
+nnoremap <leader>/ :Ack!<space>
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" Language Client
+let g:LanguageClient_autoStart=1
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+    \ }
+
 " Go
 " Shoosh Vim up until we get a new point release in the EPEL
-let g:go_version_warning = 0
+let g:go_version_warning=0
 
-let g:go_fmt_autosave = 1
-let g:go_fmt_command = "goimports"
+let g:go_fmt_autosave=1
+let g:go_fmt_command="goimports"
 
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_types = 1
-let g:go_addtags_transform = "snakecase"
+let g:go_highlight_build_constraints=1
+let g:go_highlight_extra_types=1
+let g:go_highlight_fields=1
+let g:go_highlight_functions=1
+let g:go_highlight_methods=1
+let g:go_highlight_operators=1
+let g:go_highlight_structs=1
+let g:go_highlight_types=1
+let g:go_addtags_transform="snakecase"
 
 " Airline + Minimalist VimTheme
 let g:airline_theme='minimalist'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 0
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled=0
 
 " Supertab
-let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabDefaultCompletionType="<c-n>"
 
 " Gutentags
-let g:gutentags_generate_on_missing = 1
-let g:gutentags_generate_on_new = 1
-let g:gutentags_generate_on_write = 1
+let g:gutentags_enabled=0 " Disabled until I can tweak to not destroy my laptop every-run
+let g:gutentags_generate_on_missing=1
+let g:gutentags_generate_on_new=1
+let g:gutentags_generate_on_write=1
 let g:gutentags_ctags_tagfile = ".tags"
-let g:gutentags_ctags_exclude = ["*.min.js", "*.min.css", "build", "vendor", "var", "pub/static", "generated", ".git", "node_modules", "*.vim/bundle/*"]
+let g:gutentags_ctags_exclude = ["*.sql", "*.gz", "*.min.js", "*.min.css", "build", "vendor", "var", "pub/static", "generated", ".git", "node_modules", "*.vim/bundle/*" , "*.scss"]
+let g:gutentags_exclude_filetypes = ['gitcommit']
+"au FileType gitcommit,gitrebase let g:gutentags_enabled=0
 
 " NCM
 autocmd BufEnter * call ncm2#enable_for_buffer()
@@ -219,18 +239,12 @@ let g:phpactorPhpBin = "/opt/rh/rh-php70/root/usr/bin/php"
 let g:phpactorOmniError = v:true
 autocmd FileType php setlocal omnifunc=phpactor#Complete
 
-" Include use statement
-nmap <Leader>u :call phpactor#UseAdd()<CR>
 " Invoke the context menu
 nmap <Leader>mm :call phpactor#ContextMenu()<CR>
 " Invoke the navigation menu
 nmap <Leader>nn :call phpactor#Navigate()<CR>
 " Goto definition of class or class member under the cursor
-nmap <Leader>o :call phpactor#GotoDefinition()<CR>
-" Transform the classes in the current file
-nmap <Leader>tt :call phpactor#Transform()<CR>
-" Generate a new class (replacing the current file)
-nmap <Leader>cc :call phpactor#ClassNew()<CR>
+nmap <Leader>gD :call phpactor#GotoDefinition()<CR>
 " Extract expression (normal mode)
 nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
 " Extract expression from selection
@@ -240,3 +254,10 @@ vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" Vdebug
+if !exists('g:vdebug_options')
+    let g:vdebug_options = {}
+endif
+
+let g:vdebug_options.path_maps = {"/var/www/magento": "/home/todd.hainsworth/src/matt-blatt/magento"}
