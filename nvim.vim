@@ -15,8 +15,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'scrooloose/NERDTree'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -25,7 +23,6 @@ Plug 'dikiaap/minimalist'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'ludovicchabant/vim-gutentags'
 Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mtth/scratch.vim'
@@ -42,13 +39,9 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-path'
 Plug 'mileszs/ack.vim'
-" Requiresd PHP7 - use scl to change
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
-Plug 'phpactor/ncm2-phpactor'
-Plug 'vim-vdebug/vdebug'
 Plug 'tpope/vim-repeat'
-Plug 'NLKNguyen/pipe.vim'
-Plug 'NLKNguyen/pipe-mysql.vim'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'neovimhaskell/haskell-vim'
 call plug#end()
 
 filetype plugin indent on
@@ -69,8 +62,8 @@ set relativenumber
 set exrc
 
 " Whitespace
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 set expandtab
 set autoindent
 set smartindent
@@ -146,6 +139,7 @@ nnoremap <leader>o :only<cr>
 " Show current file path
 nnoremap <leader>ff 1<C-G>
 
+" Open the current file in a new tab
 nnoremap <leader>zz :tabedit %<cr>
 nnoremap <leader>ZZ :tabclose<cr>
 
@@ -164,7 +158,11 @@ nnoremap <c-t> :Tags<cr>
 nnoremap <c-f> :Ag<cr>
 nnoremap <c-c> :Commits<cr>
 nnoremap <c-C> :BCommits<cr>
-let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+if filereadable("vendor/")
+  let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+else
+  let $FZF_DEFAULT_COMMAND = 'ag -g "" ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+endif
 
 " Fugitive
 nnoremap <leader>gb :Gblame<cr>
@@ -173,9 +171,6 @@ nnoremap <leader>gd :Gdiff<cr>
 " Commentary
 nnoremap <leader>c<space> :Commentary<cr>
 vnoremap <leader>c<space> :Commentary<cr>
-
-" vim-jsx
-let g:jsx_ext_required = 1
 
 " NERDTree
 nnoremap <leader>nt :NERDTreeToggle<CR>
@@ -218,16 +213,6 @@ let g:airline#extensions#tabline#enabled=0
 " Supertab
 let g:SuperTabDefaultCompletionType="<c-n>"
 
-" Gutentags
-let g:gutentags_enabled=0 " Disabled until I can tweak to not destroy my laptop every-run
-let g:gutentags_generate_on_missing=1
-let g:gutentags_generate_on_new=1
-let g:gutentags_generate_on_write=1
-let g:gutentags_ctags_tagfile = ".tags"
-let g:gutentags_ctags_exclude = ["*.sql", "*.gz", "*.min.js", "*.min.css", "build", "vendor", "var", "pub/static", "generated", ".git", "node_modules", "*.vim/bundle/*" , "*.scss"]
-let g:gutentags_exclude_filetypes = ['gitcommit']
-"au FileType gitcommit,gitrebase let g:gutentags_enabled=0
-
 " NCM
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
@@ -252,12 +237,10 @@ vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
 " Extract method from selection
 vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
 
+" HDevTools
+au FileType haskell nnoremap <buffer> <leader>tt :HdevtoolsType<CR>
+au FileType haskell nnoremap <buffer> <leader>tc <F2> :HdevtoolsClear<CR>
+au FileType haskell nnoremap <buffer> <leader>ti :HdevtoolsInfo<CR>
+
 " Rust
 let g:rustfmt_autosave = 1
-
-" Vdebug
-if !exists('g:vdebug_options')
-    let g:vdebug_options = {}
-endif
-
-let g:vdebug_options.path_maps = {"/var/www/magento": "/home/todd.hainsworth/src/matt-blatt/magento"}
