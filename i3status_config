@@ -9,6 +9,10 @@
 general {
         colors = true
         interval = 5
+        color_good = "#a1b56c"
+        color_bad = "#ab4642"
+        color_degraded = "#f7ca88"
+        output_format = "i3bar"
 }
 
 order += "disk /"
@@ -33,7 +37,7 @@ battery 0 {
 }
 
 tztime local {
-        format = "%d-%m-%Y %H:%M:%S"
+        format = "%d-%m-%Y %l:%M:%S"
 }
 
 load {
@@ -42,10 +46,4 @@ load {
 
 disk "/" {
         format = "%free"
-}
-
-general {
-       color_good = "#a1b56c"
-       color_bad = "#ab4642"
-       color_degraded = "#f7ca88"
 }

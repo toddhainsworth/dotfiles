@@ -206,9 +206,9 @@ client.background       $base07
 bar {
   status_command i3status
   font pango:monospace 9
+  workspace_buttons no
 
   colors {
     background $base00
   }
 }
-
