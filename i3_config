@@ -34,7 +34,7 @@ new_window 1pixel
 workspace_layout tabbed
 
 # start a terminal
-bindsym $mod+Return exec gnome-terminal
+bindsym $mod+Return exec alacritty
 
 # Lock with i3lock
 bindsym $mod+l exec i3lock-fancy -t "Back soon..." 
@@ -50,10 +50,10 @@ bindsym $mod+d exec dmenu_run
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-#bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+# bindsym $mod+j focus left
+# bindsym $mod+k focus down
+# bindsym $mod+l focus up
+# bindsym $mod+semicolon focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -62,10 +62,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+# bindsym $mod+Shift+j move left
+# bindsym $mod+Shift+k move down
+# bindsym $mod+Shift+l move up
+# bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -174,11 +174,11 @@ workspace "9" output DP-2-2
 workspace "10" output DP-2-2
 
 # Volume controls
-bindsym Mod1+comma exec amixer set Master -q 5%-
-bindsym Mod1+period exec amixer set Master -q 5%+
+bindsym $mod+comma exec amixer set Master -q 5%-
+bindsym $mod+period exec amixer set Master -q 5%+
 
 # Screenshots
-bindsym Mod1+Shift+s exec gnome-screenshot -i
+bindsym $mod+Shift+s exec gnome-screenshot -i
 
 # Don't follow the mouse
 focus_follows_mouse no
