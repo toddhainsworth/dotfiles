@@ -1,0 +1,49 @@
+# i3status configuration file.
+# see "man i3status" for documentation.
+
+# It is important that this file is edited as UTF-8.
+# The following line should contain a sharp s:
+# ß
+# If the above line is not correctly displayed, fix your editor first!
+
+general {
+        colors = true
+        interval = 1
+        color_good = "#a1b56c"
+        color_bad = "#ab4642"
+        color_degraded = "#f7ca88"
+        output_format = "i3bar"
+}
+
+order += "disk /"
+order += "cpu_usage"
+order += "wireless _first_"
+order += "ethernet _first_"
+order += "battery 0"
+order += "tztime local"
+
+wireless _first_ {
+        format_up = " (%essid) %ip"
+        format_down = " down"
+}
+
+ethernet _first_ {
+        format_up = " %ip"
+        format_down = " down"
+}
+
+battery 0 {
+        format = " %percentage %remaining"
+}
+
+tztime local {
+        format = "%d-%m-%Y %l:%M:%S"
+}
+
+cpu_usage {
+        format = "CPU: %usage"
+}
+
+disk "/" {
+        format = "\"\/\" has %free"
+}

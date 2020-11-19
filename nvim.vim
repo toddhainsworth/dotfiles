@@ -238,6 +238,9 @@ au FileType haskell nnoremap <buffer> <leader>tt :HdevtoolsType<CR>
 au FileType haskell nnoremap <buffer> <leader>tc <F2> :HdevtoolsClear<CR>
 au FileType haskell nnoremap <buffer> <leader>ti :HdevtoolsInfo<CR>
 
+" Format JSON
+nnoremap <leader>js %!python -m json.tool<cr>
+
 " Rust
 let g:rustfmt_autosave = 1
 
