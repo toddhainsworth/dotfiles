@@ -25,13 +25,12 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'mtth/scratch.vim'
-Plug 'alvan/vim-php-manual'
 Plug 'airblade/vim-rooter'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'junegunn/vim-after-object'
 Plug 'chriskempson/base16-vim'
 Plug 'StanAngeloff/php.vim'
+Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/ncm-phpactor'
 Plug 'mileszs/ack.vim'
@@ -239,3 +238,14 @@ nnoremap <leader>js %!python -m json.tool<cr>
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" Language Server
+let g:LanguageClient_settingsPath = "/home/todd/.vim/settings.json"
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['env', 'CARGO_TARGET_DIR=/Users/todd/.cargo/bin/rls', 'rls'],
+    \ 'python': ['pyls'],
+    \ }
+let g:LanguageClient_autoStart = 1
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
