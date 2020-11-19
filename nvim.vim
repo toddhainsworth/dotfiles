@@ -32,16 +32,14 @@ Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.s
 Plug 'junegunn/vim-after-object'
 Plug 'chriskempson/base16-vim'
 Plug 'StanAngeloff/php.vim'
-Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'roxma/ncm-phpactor'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-path'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
 Plug 'HerringtonDarkholme/yats.vim'
 Plug 'neovimhaskell/haskell-vim'
+Plug 'jparise/vim-graphql'
+Plug 'xolox/vim-misc'
 call plug#end()
 
 filetype plugin indent on
@@ -62,8 +60,8 @@ set relativenumber
 set exrc
 
 " Whitespace
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 set expandtab
 set autoindent
 set smartindent
@@ -159,9 +157,9 @@ nnoremap <c-f> :Ag<cr>
 nnoremap <c-c> :Commits<cr>
 nnoremap <c-C> :BCommits<cr>
 if filereadable("vendor/")
-  let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+  let $FZF_DEFAULT_COMMAND = 'ag -g "" -U vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
 else
-  let $FZF_DEFAULT_COMMAND = 'ag -g "" ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+  let $FZF_DEFAULT_COMMAND = 'ag -g "" -U ./' " Use AG for searching and makes ure to include 'vendor/' in that search
 endif
 
 " Fugitive
@@ -212,12 +210,6 @@ let g:airline#extensions#tabline#enabled=0
 
 " Supertab
 let g:SuperTabDefaultCompletionType="<c-n>"
-
-" NCM
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " PHPactor
 let g:phpactorPhpBin = "/opt/rh/rh-php70/root/usr/bin/php"
