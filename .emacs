@@ -14,7 +14,7 @@
  '(custom-safe-themes
    '("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default))
  '(package-selected-packages
-   '(json-mode graphql-mode geben ack company-php key-chord keychord company evil ivy ivy-explorer php-mode gruber-darker-theme smex magit projectile use-package evil-visual-mark-mode)))
+   '(eglot haskell-mode flycheck-rust toml-mode rust-mode json-mode graphql-mode geben ack company-php key-chord keychord company evil ivy ivy-explorer php-mode gruber-darker-theme smex magit projectile use-package evil-visual-mark-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -32,11 +32,18 @@
 
 (use-package evil :ensure t)
 (use-package ack :ensure t)
+(use-package eglot :ensure t)
 (use-package projectile :ensure t)
 (use-package company :ensure t)
 (use-package key-chord :ensure t)
 (use-package php-mode :ensure t)
+(use-package toml-mode :ensure t)
+(use-package rust-mode :ensure t)
+(use-package flycheck-rust
+  :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
+  :ensure t)
 (use-package graphql-mode :ensure t)
+(use-package haskell-mode :ensure t)
 (use-package json-mode :ensure t)
 (use-package magit :ensure t)
 (use-package smex :ensure t)
@@ -50,7 +57,10 @@
 (setq inhibit-startup-screen t)
 (menu-bar-mode 0)
 (tool-bar-mode 0)
-(scroll-bar-mode 0)
+(if (display-graphic-p)
+    (progn
+      (tool-bar-mode -1)
+      (scroll-bar-mode -1)))
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
 (column-number-mode 1)
@@ -82,3 +92,10 @@
 
 ; Graphql-mode
 (add-to-list 'auto-mode-alist '("\\.graphqls\\'" . graphql-mode))
+
+; Rust-mode
+(require 'rust-mode)
+(setq rust-format-on-save t)
+
+; Company-mode
+(add-hook 'after-init-hook 'global-company-mode)
