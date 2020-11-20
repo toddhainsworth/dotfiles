@@ -39,6 +39,7 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'jparise/vim-graphql'
 Plug 'xolox/vim-misc'
+Plug 'jceb/vim-orgmode'
 call plug#end()
 
 filetype plugin indent on
