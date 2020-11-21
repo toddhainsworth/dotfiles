@@ -66,12 +66,13 @@
 (column-number-mode 1)
 (show-paren-mode 1)
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
+(setq vc-suppress-confirm t)
 
 ; Exit insert mode by pressing j and then j quickly
 (setq key-chord-two-keys-delay 0.5)
 (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
 (key-chord-mode 1)
-1
+
 ; Ido mode
 (require 'ido)
 (ido-mode t)
@@ -99,3 +100,12 @@
 
 ; Company-mode
 (add-hook 'after-init-hook 'global-company-mode)
+
+; Eglot
+(add-hook 'rust-mode-hook 'eglot-ensure)
+(add-hook 'python-mode-hook 'eglot-ensure)
+(add-hook 'ruby-mode-hook 'eglot-ensure)
+(add-hook 'php-mode-hook 'eglot-ensure)
+(add-hook 'haskell-mode-hook 'eglot-ensure)
+(add-hook 'go-mode-hook 'eglot-ensure)
+(add-hook 'elixir-mode-hook 'eglot-ensure)
