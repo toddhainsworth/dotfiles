@@ -14,7 +14,7 @@
  '(custom-safe-themes
    '("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default))
  '(package-selected-packages
-   '(eglot haskell-mode flycheck-rust toml-mode rust-mode json-mode graphql-mode geben ack company-php key-chord keychord company evil ivy ivy-explorer php-mode gruber-darker-theme smex magit projectile use-package evil-visual-mark-mode)))
+   '(ido-vertical-mode cider clojure-mode eglot haskell-mode flycheck-rust toml-mode rust-mode json-mode graphql-mode geben ack company-php key-chord keychord company evil ivy ivy-explorer php-mode gruber-darker-theme smex magit projectile use-package evil-visual-mark-mode)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -34,11 +34,16 @@
 (use-package ack :ensure t)
 (use-package eglot :ensure t)
 (use-package projectile :ensure t)
+(use-package ido-vertical-mode :ensure t)
+(use-package ivy :ensure t)
+(use-package ivy-explorer :ensure t)
 (use-package company :ensure t)
 (use-package key-chord :ensure t)
+(use-package cider :ensure t)
 (use-package php-mode :ensure t)
 (use-package toml-mode :ensure t)
 (use-package rust-mode :ensure t)
+(use-package clojure-mode :ensure t)
 (use-package flycheck-rust
   :config (add-hook 'flycheck-mode-hook #'flycheck-rust-setup)
   :ensure t)
@@ -87,9 +92,13 @@
 
 ; Projectile
 (projectile-mode +1)	
-(global-set-key (kbd "s-p") 'projectile-command-map)
+(global-set-key (kbd "s-p") 'projectile-find-file)
+(global-set-key (kbd "s-P") 'projectile-switch-project)
+(global-set-key (kbd "C-p") 'projectile-find-file)
 (global-set-key (kbd "C-c C-p") 'projectile-command-map)
-(global-set-key (kbd "C-x C-g") 'projectile-find-file)
+(setq projectile-completion-system 'ivy)
+;; I like to be able to search vendored files in PHP
+(add-to-list 'projectile-globally-unignored-directories "vendor")
 
 ; Graphql-mode
 (add-to-list 'auto-mode-alist '("\\.graphqls\\'" . graphql-mode))
@@ -97,6 +106,9 @@
 ; Rust-mode
 (require 'rust-mode)
 (setq rust-format-on-save t)
+;; Make sure Rust is on the path
+(setenv "PATH" (concat (getenv "PATH") ":" (expand-file-name "~/.cargo/bin")))
+(setq exec-path (append exec-path (expand-file-name "~/.cargo/bin")))
 
 ; Company-mode
 (add-hook 'after-init-hook 'global-company-mode)
@@ -106,6 +118,5 @@
 (add-hook 'python-mode-hook 'eglot-ensure)
 (add-hook 'ruby-mode-hook 'eglot-ensure)
 (add-hook 'php-mode-hook 'eglot-ensure)
-(add-hook 'haskell-mode-hook 'eglot-ensure)
 (add-hook 'go-mode-hook 'eglot-ensure)
 (add-hook 'elixir-mode-hook 'eglot-ensure)
