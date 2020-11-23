@@ -16,7 +16,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/NERDTree'
-Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'dikiaap/minimalist'
@@ -28,11 +27,8 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-rooter'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'junegunn/vim-after-object'
-Plug 'chriskempson/base16-vim'
 Plug 'StanAngeloff/php.vim'
-Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
-Plug 'roxma/ncm-phpactor'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
 Plug 'HerringtonDarkholme/yats.vim'
@@ -40,6 +36,7 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'jparise/vim-graphql'
 Plug 'xolox/vim-misc'
 Plug 'jceb/vim-orgmode'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 filetype plugin indent on
@@ -48,7 +45,6 @@ syntax sync fromstart
 
 " Setting -----------------------------------------------------------------;
 set mouse=a
-
 set nowrap                     " I hardly ever want to wrap code
 set cursorline                 " Hilight the current line
 set undofile                   " Keep track of undoable changes even after buffer closes
@@ -83,7 +79,8 @@ nmap ; :
 map B ^
 map E $
 
-nnoremap <leader>hl :noh<cr>   " Disable search hilighting
+" Disable search hilighting
+nnoremap <leader>hl :noh<cr> 
 
 " Centered search results
 nnoremap <silent> n nzz
@@ -144,9 +141,6 @@ nnoremap <leader>ZZ :tabclose<cr>
 " Remove gui elements
 set guioptions-=mTrL
 
-" Until I can be bothered to work out copy-paste with the system clipboard...
-nnoremap <leader>gg :!gedit %<cr>
-
 " Plugin related ----------------------------------------------------------;
 " FZF and misc file finding
 set wildignore+=*/doc/*
@@ -181,10 +175,6 @@ if executable('ag')
 endif
 
 " Language Client
-let g:LanguageClient_autoStart=1
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
-    \ }
 
 " Go
 " Shoosh Vim up until we get a new point release in the EPEL
@@ -211,24 +201,6 @@ let g:airline#extensions#tabline#enabled=0
 " Supertab
 let g:SuperTabDefaultCompletionType="<c-n>"
 
-" PHPactor
-let g:phpactorPhpBin = "/opt/rh/rh-php70/root/usr/bin/php"
-let g:phpactorOmniError = v:true
-autocmd FileType php setlocal omnifunc=phpactor#Complete
-
-" Invoke the context menu
-nmap <Leader>mm :call phpactor#ContextMenu()<CR>
-" Invoke the navigation menu
-nmap <Leader>nn :call phpactor#Navigate()<CR>
-" Goto definition of class or class member under the cursor
-nmap <Leader>gD :call phpactor#GotoDefinition()<CR>
-" Extract expression (normal mode)
-nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
-" Extract expression from selection
-vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-" Extract method from selection
-vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
-
 " HDevTools
 au FileType haskell nnoremap <buffer> <leader>tt :HdevtoolsType<CR>
 au FileType haskell nnoremap <buffer> <leader>tc <F2> :HdevtoolsClear<CR>
@@ -241,12 +213,12 @@ nnoremap <leader>js %!python -m json.tool<cr>
 let g:rustfmt_autosave = 1
 
 " Language Server
+let g:LanguageClient_autoStart=1
 let g:LanguageClient_settingsPath = "/home/todd/.vim/settings.json"
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['env', 'CARGO_TARGET_DIR=/Users/todd/.cargo/bin/rls', 'rls'],
     \ 'python': ['pyls'],
     \ }
-let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
