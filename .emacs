@@ -14,7 +14,8 @@
  '(custom-safe-themes
    '("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default))
  '(package-selected-packages
-   '(ido-vertical-mode cider clojure-mode eglot haskell-mode flycheck-rust toml-mode rust-mode json-mode graphql-mode geben ack company-php key-chord keychord company evil ivy ivy-explorer php-mode gruber-darker-theme smex magit projectile use-package evil-visual-mark-mode)))
+   '(helm-ag helm-projectile helm ido-vertical-mode cider clojure-mode eglot haskell-mode flycheck-rust toml-mode rust-mode json-mode graphql-mode geben ack company-php key-chord keychord company evil ivy ivy-explorer php-mode gruber-darker-theme smex magit projectile use-package evil-visual-mark-mode))
+ '(projectile-globally-unignored-directories '("*vendor/magento*" "*vendor/magento")))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -35,8 +36,9 @@
 (use-package eglot :ensure t)
 (use-package projectile :ensure t)
 (use-package ido-vertical-mode :ensure t)
-(use-package ivy :ensure t)
-(use-package ivy-explorer :ensure t)
+(use-package helm :ensure t)
+(use-package helm-projectile :ensure t)
+(use-package helm-ag :ensure t)
 (use-package company :ensure t)
 (use-package key-chord :ensure t)
 (use-package cider :ensure t)
@@ -92,13 +94,13 @@
 
 ; Projectile
 (projectile-mode +1)	
-(global-set-key (kbd "s-p") 'projectile-find-file)
-(global-set-key (kbd "s-P") 'projectile-switch-project)
-(global-set-key (kbd "C-p") 'projectile-find-file)
+(global-set-key (kbd "s-p") 'helm-projectile-find-file)
+(global-set-key (kbd "M-p") 'helm-projectile-find-file)
+(global-set-key (kbd "s-P") 'helm-projectile-switch-project)
+(global-set-key (kbd "C-p") 'helm-projectile-find-file)
 (global-set-key (kbd "C-c C-p") 'projectile-command-map)
-(setq projectile-completion-system 'ivy)
-;; I like to be able to search vendored files in PHP
-(add-to-list 'projectile-globally-unignored-directories "vendor")
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
 
 ; Graphql-mode
 (add-to-list 'auto-mode-alist '("\\.graphqls\\'" . graphql-mode))
