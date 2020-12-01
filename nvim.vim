@@ -1,4 +1,7 @@
-" Setup -------------------------------------------------------------------;
+" A VimRC
+" Todd Hainsworth
+
+" {{{ Setup
 let mapleader = "\\"
 
 autocmd!
@@ -7,8 +10,8 @@ filetype off
 
 " No plans to use Vim anywhere where this'd cause issues
 set t_Co=256
-
-" Plugin -------------------------------------------------------------------;
+" }}}
+" {{{ Plugin
 call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -41,12 +44,12 @@ Plug 'jparise/vim-graphql'
 Plug 'xolox/vim-misc'
 Plug 'jceb/vim-orgmode'
 call plug#end()
-
+" }}}
+" {{{ Settings
 filetype plugin indent on
 syntax enable
 syntax sync fromstart
 
-" Setting -----------------------------------------------------------------;
 set mouse=a
 
 set nowrap                     " I hardly ever want to wrap code
@@ -58,6 +61,9 @@ set showcmd                    " Show incomplete command
 set number
 set relativenumber
 set exrc
+" Remove gui elements
+set guioptions-=mTrL
+
 
 " Whitespace
 set tabstop=4
@@ -68,10 +74,13 @@ set smartindent
 set shiftround
 set colorcolumn=140
 set tags=.tags
-" Beautiful
 colorscheme minimalist
-
-" Keymap -----------------------------------------------------------------;
+" }}}
+" {{{ Folding
+set foldmethod=marker
+nnoremap <space> za
+" }}}
+" {{{ Keymap
 " Move sanely
 map j gj
 map k gk
@@ -141,13 +150,10 @@ nnoremap <leader>ff 1<C-G>
 nnoremap <leader>zz :tabedit %<cr>
 nnoremap <leader>ZZ :tabclose<cr>
 
-" Remove gui elements
-set guioptions-=mTrL
-
 " Until I can be bothered to work out copy-paste with the system clipboard...
 nnoremap <leader>gg :!gedit %<cr>
-
-" Plugin related ----------------------------------------------------------;
+" }}}
+" {{{ Plugin related
 " FZF and misc file finding
 set wildignore+=*/doc/*
 nnoremap <c-p> :Files<cr>
@@ -216,19 +222,6 @@ let g:phpactorPhpBin = "/opt/rh/rh-php70/root/usr/bin/php"
 let g:phpactorOmniError = v:true
 autocmd FileType php setlocal omnifunc=phpactor#Complete
 
-" Invoke the context menu
-nmap <Leader>mm :call phpactor#ContextMenu()<CR>
-" Invoke the navigation menu
-nmap <Leader>nn :call phpactor#Navigate()<CR>
-" Goto definition of class or class member under the cursor
-nmap <Leader>gD :call phpactor#GotoDefinition()<CR>
-" Extract expression (normal mode)
-nmap <silent><Leader>ee :call phpactor#ExtractExpression(v:false)<CR>
-" Extract expression from selection
-vmap <silent><Leader>ee :<C-U>call phpactor#ExtractExpression(v:true)<CR>
-" Extract method from selection
-vmap <silent><Leader>em :<C-U>call phpactor#ExtractMethod()<CR>
-
 " HDevTools
 au FileType haskell nnoremap <buffer> <leader>tt :HdevtoolsType<CR>
 au FileType haskell nnoremap <buffer> <leader>tc <F2> :HdevtoolsClear<CR>
@@ -250,3 +243,4 @@ let g:LanguageClient_autoStart = 1
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+" }}}
