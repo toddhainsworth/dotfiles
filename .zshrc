@@ -97,6 +97,8 @@ alias composer-no-bs="composer --prefer-dist --no-plugins"
 alias cf="n98-magerun.phar cache:flush"
 alias weather="curl -4 http://wttr.in/Adelaide"
 alias reattach="tmux attach -t "
+alias mux="tmuxinator"
+alias v="./vessel"
 
 function grepFor() {
   grep -Po '<string to search for>\K[^<next char>]+' exception.log|sort|uniq
@@ -112,8 +114,8 @@ function laranew() {
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
 
-fixi3
-
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
