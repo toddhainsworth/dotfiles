@@ -29,17 +29,17 @@ path_exists VPN {
 }
 
 wireless _first_ {
-        format_up = "  %ip @ %quality"
-        format_down = " down"
+        format_up = "W: %ip @ %quality"
+        format_down = "W: down"
 }
 
 ethernet _first_ {
-        format_up = " %ip"
-        format_down = " down"
+        format_up = "E: %ip"
+        format_down = "E: down"
 }
 
 battery 0 {
-        format = " %percentage %remaining"
+        format = "B: %percentage %remaining"
 }
 
 tztime local {
@@ -47,7 +47,7 @@ tztime local {
 }
 
 cpu_usage {
-        format = "CPU: %usage"
+        format = "C: %usage"
 }
 
 disk "/" {

@@ -85,6 +85,7 @@ export EDITOR='vim'
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 #
 export PATH=$PATH:$HOME/.composer/vendor/bin
+export PATH=$PATH:$HOME/bin
 
 alias showme="nautilus"
 alias fixi3="xrandr --output HDMI1 --auto --right-of HDMI2"
@@ -99,6 +100,8 @@ alias weather="curl -4 http://wttr.in/Adelaide"
 alias reattach="tmux attach -t "
 alias mux="tmuxinator"
 alias v="./vessel"
+alias nv="nvim"
+alias gap="git add -p"
 
 function grepFor() {
   grep -Po '<string to search for>\K[^<next char>]+' exception.log|sort|uniq
@@ -119,3 +122,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# BEGIN SNIPPET: Magento Cloud CLI configuration
+HOME=${HOME:-'/home/todd.hainsworth'}
+export PATH="$HOME/"'.magento-cloud/bin':"$PATH"
+if [ -f "$HOME/"'.magento-cloud/shell-config.rc' ]; then . "$HOME/"'.magento-cloud/shell-config.rc'; fi # END SNIPPET
+
+# AWS Jumphost stuff
+source ~/bin/jump

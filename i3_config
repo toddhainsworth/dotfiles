@@ -38,7 +38,7 @@ workspace_layout tabbed
 bindsym $mod+Return exec alacritty
 
 # Lock with i3lock
-bindsym $mod+l exec i3lock-fancy -p -t "Back soon..." 
+bindsym $mod+l exec i3lock-fancy -p
 
 # kill focused window
 bindsym $mod+Shift+q kill

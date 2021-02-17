@@ -9,35 +9,6 @@ filetype off
 
 " No plans to use Vim anywhere where this'd cause issues
 set t_Co=256
-
-" Vundle ------------------------------------------------------------------;
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-vinegar'
-Plugin 'tpope/vim-fireplace'
-"Plugin 'kien/ctrlp.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'ervandew/supertab'
-Plugin 'mileszs/ack.vim'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'pangloss/vim-javascript'
-Plugin 'rust-lang/rust.vim'
-Plugin 'mxw/vim-jsx'
-Plugin 'scrooloose/NERDTree'
-Plugin 'fatih/vim-go'
-Plugin 'easymotion/vim-easymotion'
-Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plugin 'junegunn/fzf.vim'
-Plugin 'dikiaap/minimalist'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-call vundle#end()
-
-filetype plugin indent on
 syntax enable
 syntax sync fromstart
 
@@ -82,8 +53,6 @@ set relativenumber
 
 set colorcolumn=140
 
-colorscheme minimalist
-
 " Switching between splits
 nnoremap <leader>we <C-w>l
 nnoremap <leader>wq <C-w>h
@@ -101,44 +70,3 @@ nnoremap <leader>ff 1<C-G>
 
 " Remove gui elements
 set guioptions-=mTrL
-
-" Plugin related ----------------------------------------------------------;
-" Ack.vim
-nnoremap <leader>/ :Ack 
-if executable('ag')
-    let g:ackprg = 'ag --vimgrep'
-endif
-
-" FZF
-set wildignore+=*/doc/*
-function! s:find_git_root()
-    return system('git rev-parse --show-toplevel 2> /dev/null')[:-2]
-endfunction
-command! ProjectFiles execute 'Files' s:find_git_root() 
-
-nnoremap <c-p> :ProjectFiles<cr>
-nnoremap <leader>p :ProjectFiles<cr>
-let $FZF_DEFAULT_COMMAND = 'ag -g "" vendor/ ./'
-
-" Fugitive
-nnoremap <leader>gb :Gblame<cr>
-
-" Commentary
-nnoremap <leader>c<space> :Commentary<cr>
-vnoremap <leader>c<space> :Commentary<cr>
-
-" vim-jsx
-let g:jsx_ext_required = 1
-
-" NERDTree
-nnoremap <leader>nt :NERDTreeToggle<CR>
-
-" Go
-" Shoosh Vim up until we get a new point release in the EPEL
-let g:go_version_warning = 0
-let g:go_fmt_autosave = 0
-
-" Airline + Minimalist VimTheme
-let g:airline_theme='minimalist'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
