@@ -24,7 +24,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'dikiaap/minimalist'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-rooter'
@@ -39,7 +39,8 @@ Plug 'neovimhaskell/haskell-vim'
 Plug 'jparise/vim-graphql'
 Plug 'xolox/vim-misc'
 Plug 'jceb/vim-orgmode'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'ervandew/supertab'
+Plug 'vim-vdebug/vdebug'
 call plug#end()
 " }}}
 " {{{ Settings
@@ -57,9 +58,9 @@ set showcmd                    " Show incomplete command
 set number
 set relativenumber
 set exrc
+
 " Remove gui elements
 set guioptions-=mTrL
-
 
 " Whitespace
 set tabstop=4
@@ -146,6 +147,14 @@ nnoremap <leader>ff 1<C-G>
 " Open the current file in a new tab
 nnoremap <leader>zz :tabedit %<cr>
 nnoremap <leader>ZZ :tabclose<cr>
+
+" Misc. Autocomplete stuff
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" LanguageClient
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
 " }}}
 " {{{ Plugin related
 " FZF and misc file finding
@@ -179,8 +188,6 @@ nnoremap <leader>/ :Ack!<space>
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
-
-" Language Client
 
 " Go
 " Shoosh Vim up until we get a new point release in the EPEL
@@ -218,8 +225,9 @@ nnoremap <leader>js %!python -m json.tool<cr>
 " Rust
 let g:rustfmt_autosave = 1
 
-" Language Server
+" Language Server/Client
 let g:LanguageClient_autoStart=1
+let g:LanguageClient_signColumnAlwaysOn = 1
 let g:LanguageClient_settingsPath = "/home/todd/.vim/settings.json"
 let g:LanguageClient_serverCommands = {
     \ 'rust': ['env', 'CARGO_TARGET_DIR=/Users/todd/.cargo/bin/rls', 'rls'],
@@ -228,4 +236,11 @@ let g:LanguageClient_serverCommands = {
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+" ALE
+let g:ale_pattern_options = {'\.php$': {'ale_enabled': 0}}
+
 " }}}
+
+" see exrc above
+set secure
