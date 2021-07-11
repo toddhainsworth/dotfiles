@@ -29,7 +29,6 @@ Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-rooter'
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'junegunn/vim-after-object'
 Plug 'StanAngeloff/php.vim'
 Plug 'roxma/nvim-yarp'
 Plug 'mileszs/ack.vim'
@@ -38,9 +37,10 @@ Plug 'HerringtonDarkholme/yats.vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'jparise/vim-graphql'
 Plug 'xolox/vim-misc'
-Plug 'jceb/vim-orgmode'
 Plug 'ervandew/supertab'
 Plug 'vim-vdebug/vdebug'
+Plug 'vim-scripts/utl.vim'
+Plug 'tpope/vim-speeddating'
 call plug#end()
 " }}}
 " {{{ Settings
