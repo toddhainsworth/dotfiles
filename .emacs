@@ -48,7 +48,8 @@
 (use-package toml-mode :ensure t)
 (use-package rust-mode :ensure t)
 (use-package json-mode :ensure t)
-(use-package graphql-mode :ensure t)
+(use-package graphql-mode :ensure t
+  :config (add-to-list 'auto-mode-alist '("\\.graphqls$" . graphql-mode)))
 (use-package magit :ensure t)
 (use-package smex :ensure t)
 (use-package base16-theme :ensure t :config (load-theme 'base16-default-dark t))
