@@ -17,8 +17,7 @@
     ("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
  '(package-selected-packages
    (quote
-    (undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode smex rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company)))
- '(projectile-globally-unignored-directories (quote ("*vendor/magento*" "*vendor/magento"))))
+    (undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode smex rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -40,7 +39,9 @@
 (use-package ido-vertical-mode :ensure t)
 (use-package ivy :ensure t)
 (use-package counsel :ensure t)
-(use-package projectile :ensure t)
+;; So why doesn't this unignored change seem to work? :(
+(use-package projectile :ensure t
+  :config (add-to-list 'projectile-globally-unignored-directories "*vendor*"))
 (use-package counsel-projectile :ensure t)
 (use-package company :ensure t)
 (use-package key-chord :ensure t)
@@ -106,13 +107,16 @@
 (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
 
 ;; Projectile + Ivy/Counsel
-(projectile-mode +1)	
+(projectile-mode 1)
 (global-set-key (kbd "s-p") 'counsel-projectile-find-file)
 (global-set-key (kbd "M-p") 'counsel-projectile-find-file)
 (global-set-key (kbd "s-P") 'counsel-projectile-switch-project)
 (global-set-key (kbd "C-p") 'counsel-projectile-find-file)
 (global-set-key (kbd "C-c C-p") 'projectile-command-map)
 (setq projectile-completion-system 'counsel)
+(defun projectile-project-vcs (dir)
+  "Do not treat anything as a VCS root, because for some reason the unignored dirs feature doesn't work?"
+  'none)
 
 ; Rust-mode
 (require 'rust-mode)
