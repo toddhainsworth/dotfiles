@@ -10,12 +10,15 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(gruber-darker))
+ '(ansi-color-names-vector
+   ["#181818" "#ab4642" "#a1b56c" "#f7ca88" "#7cafc2" "#ba8baf" "#7cafc2" "#d8d8d8"])
  '(custom-safe-themes
-   '("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default))
+   (quote
+    ("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
  '(package-selected-packages
-   '(counsel-projectile counsel use-package toml-mode smex rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag gruber-darker-theme evil-visual-mark-mode eglot company ack))
- '(projectile-globally-unignored-directories '("*vendor/magento*" "*vendor/magento")))
+   (quote
+    (undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode smex rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company)))
+ '(projectile-globally-unignored-directories (quote ("*vendor/magento*" "*vendor/magento"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -31,7 +34,9 @@
 (eval-when-compile
   (require 'use-package))
 
-(use-package evil :ensure t)
+(use-package evil :ensure t
+  :init (setq evil-undo-system 'undo-fu))
+(use-package undo-fu :ensure t)
 (use-package ido-vertical-mode :ensure t)
 (use-package ivy :ensure t)
 (use-package counsel :ensure t)
@@ -43,9 +48,10 @@
 (use-package toml-mode :ensure t)
 (use-package rust-mode :ensure t)
 (use-package json-mode :ensure t)
+(use-package graphql-mode :ensure t)
 (use-package magit :ensure t)
 (use-package smex :ensure t)
-(use-package gruber-darker-theme :ensure t)
+(use-package base16-theme :ensure t :config (load-theme 'base16-default-dark t))
 
 ;; Evil mode >:D
 (require 'evil)
@@ -53,14 +59,17 @@
 
 ;; Let's configure!
 (setq inhibit-startup-screen t)
+
 (menu-bar-mode 0)
 (tool-bar-mode 0)
 (scroll-bar-mode 0)
 (blink-cursor-mode 0)
-(global-display-line-numbers-mode 1)
-(setq display-line-numbers-type 'relative)
 (column-number-mode 1)
 (show-paren-mode 1)
+
+(global-display-line-numbers-mode 1)
+(setq display-line-numbers-type 'relative)
+
 (setq backup-directory-alist '(("." . "~/.emacs_saves")))
 (setq vc-suppress-confirm t)
 (windmove-default-keybindings)
@@ -105,7 +114,6 @@
 (setq projectile-completion-system 'counsel)
 
 ; Rust-mode
-;(setq exec-path (append exec-path (expand-file-name "~/.cargo/bin")))
 (require 'rust-mode)
 (setq rust-format-on-save t)
 
