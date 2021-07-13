@@ -17,7 +17,7 @@
     ("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
  '(package-selected-packages
    (quote
-    (undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode smex rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
+    (flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -34,26 +34,49 @@
   (require 'use-package))
 
 (use-package evil :ensure t
-  :init (setq evil-undo-system 'undo-fu))
+  :init (setq evil-undo-system 'undo-fu)
+  :config (define-key evil-normal-state-map (kbd "B") 'evil-beginning-of-line)
+	  (define-key evil-normal-state-map (kbd "E") 'evil-end-of-line))
 (use-package undo-fu :ensure t)
 (use-package ido-vertical-mode :ensure t)
-(use-package ivy :ensure t)
+(use-package ivy :ensure t
+  :config (setq ivy-use-virtual-buffers t)
+	  (setq ivy-use-selectable-prompt t)
+	  (setq enable-recursive-minibuffers t)
+	  (global-set-key "\C-s" 'swiper)
+	  (global-set-key (kbd "C-c C-r") 'ivy-resume)
+	  (global-set-key (kbd "<f6>") 'ivy-resume)
+	  (global-set-key (kbd "M-x") 'counsel-M-x)
+	  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
+	  (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+	  (define-key ivy-minibuffer-map (kbd "C-<return>") 'ivy-immediate-done))
 (use-package counsel :ensure t)
 ;; So why doesn't this unignored change seem to work? :(
 (use-package projectile :ensure t
-  :config (add-to-list 'projectile-globally-unignored-directories "*vendor*"))
+  :config (add-to-list 'projectile-globally-unignored-directories "*vendor*")
+	  (global-set-key (kbd "s-p") 'counsel-fzf)
+	  (global-set-key (kbd "s-P") 'counsel-projectile-switch-project)
+	  (global-set-key (kbd "C-p") 'counsel-projectile-find-file)
+	  (global-set-key (kbd "C-c C-p") 'projectile-command-map))
+(setq projectile-completion-system 'counsel)
 (use-package counsel-projectile :ensure t)
 (use-package company :ensure t)
-(use-package key-chord :ensure t)
+(use-package key-chord :ensure t
+  :init (key-chord-mode 1)
+  :config (setq key-chord-two-keys-delay 0.5)
+	  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state))
 (use-package php-mode :ensure t)
 (use-package toml-mode :ensure t)
-(use-package rust-mode :ensure t)
+(use-package rust-mode :ensure t
+  :config (setq rust-format-on-save t))
 (use-package json-mode :ensure t)
 (use-package graphql-mode :ensure t
   :config (add-to-list 'auto-mode-alist '("\\.graphqls$" . graphql-mode)))
-(use-package magit :ensure t)
-(use-package smex :ensure t)
+(use-package magit :ensure t
+  :init(define-key global-map (kbd "C-x g") 'magit-status))
 (use-package base16-theme :ensure t :config (load-theme 'base16-default-dark t))
+(use-package exec-path-from-shell :ensure t :init (exec-path-from-shell-initialize))
+(use-package flycheck :ensure t :init (global-flycheck-mode))
 
 ;; Evil mode >:D
 (require 'evil)
@@ -69,61 +92,26 @@
 (column-number-mode 1)
 (show-paren-mode 1)
 
+;; Relative numbers
 (global-display-line-numbers-mode 1)
 (setq display-line-numbers-type 'relative)
-
-(setq backup-directory-alist '(("." . "~/.emacs_saves")))
 (setq vc-suppress-confirm t)
+(setq vc-follow-symlinks t)
+(setq backup-directory-alist '(("." . "~/.emacs_saves")))
+;; Window move with <S-<arrow>>
 (windmove-default-keybindings)
-
-;; key-chord mode
-(setq key-chord-two-keys-delay 0.5)
-(key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-(key-chord-mode 1)
-
-;; Ido mode
-(require 'ido)
-(ido-mode t)
-(ido-everywhere 1)
-
-;; Smex
-(require 'smex)
-(smex-initialize)
-(global-set-key (kbd "M-x") 'smex)
-(global-set-key (kbd "M-X") 'smex-major-mode-commands)
-(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-
-;; Ivy/Counsel
-(require 'ivy)
-(require 'counsel)
-(ivy-mode)
-(setq ivy-use-virtual-buffers t)
-(setq enable-recursive-minibuffers t)
-(global-set-key "\C-s" 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key (kbd "<f6>") 'ivy-resume)
-(global-set-key (kbd "M-x") 'counsel-M-x)
-(global-set-key (kbd "C-x C-f") 'counsel-find-file)
-(global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+;; No wrapping please
+(set-default 'truncate-lines t)
+;; Escape everywhere
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
 ;; Projectile + Ivy/Counsel
-(projectile-mode 1)
-(global-set-key (kbd "s-p") 'counsel-projectile-find-file)
-(global-set-key (kbd "M-p") 'counsel-projectile-find-file)
-(global-set-key (kbd "s-P") 'counsel-projectile-switch-project)
-(global-set-key (kbd "C-p") 'counsel-projectile-find-file)
-(global-set-key (kbd "C-c C-p") 'projectile-command-map)
-(setq projectile-completion-system 'counsel)
-(defun projectile-project-vcs (dir)
-  "Do not treat anything as a VCS root, because for some reason the unignored dirs feature doesn't work?"
+(defun projectile-project-vcs (&optional dir)
+  "Ignoring DIR - Do not treat anything as a VCS root, for some reason the unignored dirs feature doesn't work?"
   'none)
-
-; Rust-mode
-(require 'rust-mode)
-(setq rust-format-on-save t)
 
 ;; Company-mode
 (add-hook 'after-init-hook 'global-company-mode)
 
-;; Sanity bits-n-pieces
-(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+;; Org-mode
+(setq org-agenda-files (list "~/org/work.org" "~/org/home.org"))
