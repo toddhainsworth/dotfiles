@@ -17,7 +17,7 @@
     ("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
  '(package-selected-packages
    (quote
-    (flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
+    (magit-todos web-mode treemacs-projectile treemacs-evil neotree flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -57,7 +57,8 @@
 	  (global-set-key (kbd "s-p") 'counsel-fzf)
 	  (global-set-key (kbd "s-P") 'counsel-projectile-switch-project)
 	  (global-set-key (kbd "C-p") 'counsel-projectile-find-file)
-	  (global-set-key (kbd "C-c C-p") 'projectile-command-map))
+	  (global-set-key (kbd "C-c C-p") 'projectile-command-map)
+	  (setq projectile-project-search-path '("~/src/")))
 (setq projectile-completion-system 'counsel)
 (use-package counsel-projectile :ensure t)
 (use-package company :ensure t)
@@ -66,6 +67,7 @@
   :config (setq key-chord-two-keys-delay 0.5)
 	  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state))
 (use-package php-mode :ensure t)
+(use-package web-mode :ensure t)
 (use-package toml-mode :ensure t)
 (use-package rust-mode :ensure t
   :config (setq rust-format-on-save t))
@@ -74,9 +76,15 @@
   :config (add-to-list 'auto-mode-alist '("\\.graphqls$" . graphql-mode)))
 (use-package magit :ensure t
   :init(define-key global-map (kbd "C-x g") 'magit-status))
+(use-package magit-todos :ensure t
+  :init (magit-todos-mode))
 (use-package base16-theme :ensure t :config (load-theme 'base16-default-dark t))
 (use-package exec-path-from-shell :ensure t :init (exec-path-from-shell-initialize))
 (use-package flycheck :ensure t :init (global-flycheck-mode))
+(use-package treemacs :ensure t
+  :config (global-set-key (kbd "<f12>") 'treemacs))
+(use-package treemacs-evil :ensure t)
+(use-package treemacs-projectile :ensure t)
 
 ;; Evil mode >:D
 (require 'evil)
