@@ -17,7 +17,7 @@
     ("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
  '(package-selected-packages
    (quote
-    (magit-todos web-mode treemacs-projectile treemacs-evil neotree flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
+    (magit-todos web-mode neotree flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -43,23 +43,24 @@
   :config (setq ivy-use-virtual-buffers t)
 	  (setq ivy-use-selectable-prompt t)
 	  (setq enable-recursive-minibuffers t)
-	  (global-set-key "\C-s" 'swiper)
-	  (global-set-key (kbd "C-c C-r") 'ivy-resume)
-	  (global-set-key (kbd "<f6>") 'ivy-resume)
-	  (global-set-key (kbd "M-x") 'counsel-M-x)
-	  (global-set-key (kbd "C-x C-f") 'counsel-find-file)
-	  (global-set-key (kbd "C-x b") 'counsel-switch-buffer)
+	  (define-key global-map "\C-s" 'swiper)
+	  (define-key global-map (kbd "C-c C-r") 'ivy-resume)
+	  (define-key global-map (kbd "<f6>") 'ivy-resume)
+	  (define-key global-map (kbd "M-x") 'counsel-M-x)
+	  (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
+	  (define-key global-map (kbd "C-x b") 'counsel-switch-buffer)
 	  (define-key ivy-minibuffer-map (kbd "C-<return>") 'ivy-immediate-done))
 (use-package counsel :ensure t)
-;; So why doesn't this unignored change seem to work? :(
 (use-package projectile :ensure t
+;; So why doesn't this unignored change seem to work? :(
   :config (add-to-list 'projectile-globally-unignored-directories "*vendor*")
-	  (global-set-key (kbd "s-p") 'counsel-fzf)
-	  (global-set-key (kbd "s-P") 'counsel-projectile-switch-project)
-	  (global-set-key (kbd "C-p") 'counsel-projectile-find-file)
-	  (global-set-key (kbd "C-c C-p") 'projectile-command-map)
-	  (setq projectile-project-search-path '("~/src/")))
-(setq projectile-completion-system 'counsel)
+	  (define-key global-map (kbd "s-p") 'counsel-fzf)
+	  (define-key global-map (kbd "s-P") 'counsel-projectile-switch-project)
+	  (define-key global-map (kbd "C-p") 'counsel-projectile-find-file)
+	  (define-key global-map (kbd "C-c C-p") 'projectile-command-map)
+	  (setq projectile-project-search-path '("~/src/"))
+	  (projectile-discover-projects-in-search-path)
+	  (setq projectile-completion-system 'counsel))
 (use-package counsel-projectile :ensure t)
 (use-package company :ensure t)
 (use-package key-chord :ensure t
@@ -75,16 +76,10 @@
 (use-package graphql-mode :ensure t
   :config (add-to-list 'auto-mode-alist '("\\.graphqls$" . graphql-mode)))
 (use-package magit :ensure t
-  :init(define-key global-map (kbd "C-x g") 'magit-status))
-(use-package magit-todos :ensure t
-  :init (magit-todos-mode))
+  :config (define-key global-map (kbd "C-x g") 'magit-status))
 (use-package base16-theme :ensure t :config (load-theme 'base16-default-dark t))
 (use-package exec-path-from-shell :ensure t :init (exec-path-from-shell-initialize))
 (use-package flycheck :ensure t :init (global-flycheck-mode))
-(use-package treemacs :ensure t
-  :config (global-set-key (kbd "<f12>") 'treemacs))
-(use-package treemacs-evil :ensure t)
-(use-package treemacs-projectile :ensure t)
 
 ;; Evil mode >:D
 (require 'evil)
@@ -122,4 +117,4 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; Org-mode
-(setq org-agenda-files (list "~/org/work.org" "~/org/home.org"))
+(setq org-agenda-files (list "~/orgs/work.org" "~/orgs/home.org"))
