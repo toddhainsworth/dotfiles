@@ -17,7 +17,7 @@
     ("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default)))
  '(package-selected-packages
    (quote
-    (magit-todos web-mode neotree flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
+    (fzf fzf\.el magit-todos web-mode neotree flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -50,11 +50,12 @@
 	  (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
 	  (define-key global-map (kbd "C-x b") 'counsel-switch-buffer)
 	  (define-key ivy-minibuffer-map (kbd "C-<return>") 'ivy-immediate-done))
+(use-package fzf :ensure t)
 (use-package counsel :ensure t)
 (use-package projectile :ensure t
 ;; So why doesn't this unignored change seem to work? :(
   :config (add-to-list 'projectile-globally-unignored-directories "*vendor*")
-	  (define-key global-map (kbd "s-p") 'counsel-fzf)
+	  (define-key global-map (kbd "s-p") 'fzf-find-file)
 	  (define-key global-map (kbd "s-P") 'counsel-projectile-switch-project)
 	  (define-key global-map (kbd "C-p") 'counsel-projectile-find-file)
 	  (define-key global-map (kbd "C-c C-p") 'projectile-command-map)
