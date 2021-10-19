@@ -63,7 +63,9 @@
 	  (projectile-discover-projects-in-search-path)
 	  (setq projectile-completion-system 'counsel))
 (use-package counsel-projectile :ensure t)
-(use-package company :ensure t)
+(use-package company :ensure t
+  :config (setq company-dabbrev-downcase 0)
+	  (setq company-idle-delay 0))
 (use-package key-chord :ensure t
   :init (key-chord-mode 1)
   :config (setq key-chord-two-keys-delay 0.5)

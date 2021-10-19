@@ -41,6 +41,7 @@ Plug 'ervandew/supertab'
 Plug 'vim-vdebug/vdebug'
 Plug 'vim-scripts/utl.vim'
 Plug 'tpope/vim-speeddating'
+Plug 'nathanaelkane/vim-indent-guides'
 call plug#end()
 " }}}
 " {{{ Settings

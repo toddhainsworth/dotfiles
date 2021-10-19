@@ -86,6 +86,7 @@ export EDITOR='nvim'
 #
 export PATH=$PATH:$HOME/.composer/vendor/bin
 export PATH=$PATH:$HOME/bin
+export PATH=$PATH:$HOME/.local/bin
 export DENO_INSTALL="/home/todd.hainsworth/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
@@ -106,6 +107,14 @@ alias nv="nvim"
 alias gap="git add -p"
 alias eroma-deploy="git push cloud"
 alias emacs="emacs -nw"
+
+# Serverless stuff
+alias node-run='docker run --rm -it --volume ~/.aws:/home/node/.aws --volume ~/.npm:/home/node/.npm --volume $PWD:/app aligent/serverless'
+alias serverless='node-run serverless'
+alias sls-deploy-local='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js deploy --log --profile localstack --stage dev'
+alias sls-invoke='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js invoke --log --profile localstack --stage dev --function'
+alias sls-invoke-stepf='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js invoke stepf --log --profile localstack --stage dev --name'
+
 
 function grepFor() {
   grep -Po '<string to search for>\K[^<next char>]+' exception.log|sort|uniq
