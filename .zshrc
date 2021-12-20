@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-  export ZSH=/home/todd.hainsworth/.oh-my-zsh
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -88,6 +88,9 @@ export PATH=$PATH:$HOME/.composer/vendor/bin
 export PATH=$PATH:$HOME/bin
 export DENO_INSTALL="/home/todd.hainsworth/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export PATH=$PATH:$HOME/Library/Python/3.8/bin
+fi
 
 alias showme="nautilus"
 alias fixi3="xrandr --output HDMI1 --auto --right-of HDMI2"
@@ -127,10 +130,23 @@ export NVM_DIR="$HOME/.nvm"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# BEGIN SNIPPET: Magento Cloud CLI configuration
-HOME=${HOME:-'/home/todd.hainsworth'}
-export PATH="$HOME/"'.magento-cloud/bin':"$PATH"
-if [ -f "$HOME/"'.magento-cloud/shell-config.rc' ]; then . "$HOME/"'.magento-cloud/shell-config.rc'; fi # END SNIPPET
+LOCHOME=${HOME:-'/home/todd.hainsworth'}
+export PATH="$LOCHOME/"'.magento-cloud/bin':"$PATH"
+if [ -f "$LOCHOME/"'.magento-cloud/shell-config.rc' ]; then . "$LOCHOME/"'.magento-cloud/shell-config.rc'; fi
 
 # AWS Jumphost stuff
 source ~/bin/jump
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+eval "$(rbenv init - zsh)"
+
+# I've got some Pert dependencies as part of Neovim on macOS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    PATH="/Users/toddhainsworth/perl5/bin${PATH:+:${PATH}}"; export PATH;
+    PERL5LIB="/Users/toddhainsworth/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+    PERL_LOCAL_LIB_ROOT="/Users/toddhainsworth/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+    PERL_MB_OPT="--install_base \"/Users/toddhainsworth/perl5\""; export PERL_MB_OPT;
+    PERL_MM_OPT="INSTALL_BASE=/Users/toddhainsworth/perl5"; export PERL_MM_OPT;
+fi

@@ -2,6 +2,12 @@
 " Todd Hainsworth
 
 " {{{ Setup
+if has("unix")
+  let s:uname = system("uname -s")
+  if s:uname == "Darwin"
+      set rtp+=/opt/homebrew/opt/fzf
+  endif
+endif
 let mapleader = "\\"
 
 autocmd!
@@ -16,7 +22,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-vinegar'
 Plug 'tpope/vim-commentary'
 Plug 'scrooloose/NERDTree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -28,19 +33,20 @@ Plug 'dense-analysis/ale'
 Plug 'rust-lang/rust.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-rooter'
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'StanAngeloff/php.vim'
-Plug 'roxma/nvim-yarp'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
-Plug 'HerringtonDarkholme/yats.vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'jparise/vim-graphql'
 Plug 'xolox/vim-misc'
 Plug 'ervandew/supertab'
 Plug 'vim-vdebug/vdebug'
-Plug 'vim-scripts/utl.vim'
-Plug 'tpope/vim-speeddating'
+Plug 'neovim/nvim-lspconfig'
+Plug 'simrat39/rust-tools.nvim'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-buffer'
 call plug#end()
 " }}}
 " {{{ Settings
@@ -71,6 +77,9 @@ set smartindent
 set shiftround
 set colorcolumn=140
 set tags=.tags
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+
 colorscheme minimalist
 " }}}
 " {{{ Folding
@@ -189,23 +198,6 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
-" Go
-" Shoosh Vim up until we get a new point release in the EPEL
-let g:go_version_warning=0
-
-let g:go_fmt_autosave=1
-let g:go_fmt_command="goimports"
-
-let g:go_highlight_build_constraints=1
-let g:go_highlight_extra_types=1
-let g:go_highlight_fields=1
-let g:go_highlight_functions=1
-let g:go_highlight_methods=1
-let g:go_highlight_operators=1
-let g:go_highlight_structs=1
-let g:go_highlight_types=1
-let g:go_addtags_transform="snakecase"
-
 " Airline + Minimalist VimTheme
 let g:airline_theme='minimalist'
 let g:airline_powerline_fonts=1
@@ -214,31 +206,91 @@ let g:airline#extensions#tabline#enabled=0
 " Supertab
 let g:SuperTabDefaultCompletionType="<c-n>"
 
-" HDevTools
-au FileType haskell nnoremap <buffer> <leader>tt :HdevtoolsType<CR>
-au FileType haskell nnoremap <buffer> <leader>tc <F2> :HdevtoolsClear<CR>
-au FileType haskell nnoremap <buffer> <leader>ti :HdevtoolsInfo<CR>
-
 " Format JSON
 nnoremap <leader>js %!python -m json.tool<cr>
 
 " Rust
 let g:rustfmt_autosave = 1
 
-" Language Server/Client
-let g:LanguageClient_autoStart=1
-let g:LanguageClient_signColumnAlwaysOn = 1
-let g:LanguageClient_settingsPath = "/home/todd/.vim/settings.json"
-let g:LanguageClient_serverCommands = {
-    \ 'rust': ['env', 'CARGO_TARGET_DIR=/Users/todd/.cargo/bin/rls', 'rls'],
-    \ 'python': ['pyls'],
-    \ }
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
 " ALE
 let g:ale_pattern_options = {'\.php$': {'ale_enabled': 0}}
+let g:ale_linters = {'rust': ['analyzer']}
+
+" Neovim language client stuff
+" LSP Setup
+set updatetime=300
+autocmd CursorHold * lua vim.lsp.diagnostic.show_line_diagnostics()
+lua << EOF
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        -- on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
+        }
+    },
+}
+
+require('rust-tools').setup(opts)
+EOF
+
+" LSP Completion Setup
+lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+})
+EOF
 
 " }}}
 
