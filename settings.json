@@ -19,7 +19,7 @@
             "after": [":"]
         }
     ],
-    "vim.smartRelativeLine": true,
+    "vim.smartRelativeLine": false,
     "editor.fontSize": 12,
     "search.useIgnoreFiles": false,
     "php.executablePath": "/usr/bin/php",
@@ -36,5 +36,14 @@
             "strings": true
         },
         "editor.suggest.insertMode": "replace"
-    }
+    },
+    "[typescript]": {
+        "editor.tabSize": 4
+    },
+    "[javascript]": {
+        "editor.tabSize": 4
+    },
+    "[json]": {
+        "editor.tabSize": 4
+    },
 }

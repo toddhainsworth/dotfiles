@@ -159,3 +159,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     PERL_MB_OPT="--install_base \"/Users/toddhainsworth/perl5\""; export PERL_MB_OPT;
     PERL_MM_OPT="INSTALL_BASE=/Users/toddhainsworth/perl5"; export PERL_MM_OPT;
 fi
+
+# PHPENV
+export PATH="$HOME/.phpenv/bin:$PATH"
+eval "$(phpenv init -)"

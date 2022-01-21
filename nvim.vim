@@ -35,7 +35,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'airblade/vim-rooter'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-repeat'
-Plug 'neovimhaskell/haskell-vim'
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'jparise/vim-graphql'
 Plug 'xolox/vim-misc'
 Plug 'ervandew/supertab'
@@ -155,15 +155,8 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 " Easier exit
 inoremap jj <esc>
 
-" Leader+a to close other splits
-nnoremap <leader>o :only<cr>
-
 " Show current file path
 nnoremap <leader>ff 1<C-G>
-
-" Open the current file in a new tab
-nnoremap <leader>zz :tabedit %<cr>
-nnoremap <leader>ZZ :tabclose<cr>
 
 " Misc. Autocomplete stuff
 " inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -219,6 +212,17 @@ nnoremap <leader>js %!python -m json.tool<cr>
 
 " Rust
 let g:rustfmt_autosave = 1
+
+" Language Server/Client
+let g:LanguageClient_autoStart=1
+let g:LanguageClient_signColumnAlwaysOn = 1
+let g:LanguageClient_settingsPath = "/home/todd/.vim/settings.json"
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['env', 'CARGO_TARGET_DIR=/Users/todd/.cargo/bin/rls', 'rls'],
+    \ 'python': ['pyls'],
+    \ }
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 
 " ALE
 let g:ale_pattern_options = {'\.php$': {'ale_enabled': 0}}
