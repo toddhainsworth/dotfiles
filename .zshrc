@@ -161,5 +161,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # PHPENV
-export PATH="$HOME/.phpenv/bin:$PATH"
-eval "$(phpenv init -)"
+if [[ -d "$HOME/.phpenv/bin" ]]; then
+    export PATH="$HOME/.phpenv/bin:$PATH"
+    eval "$(phpenv init -)"
+fi
