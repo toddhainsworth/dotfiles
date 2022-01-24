@@ -43,6 +43,7 @@ Plug 'vim-vdebug/vdebug'
 Plug 'vim-scripts/utl.vim'
 Plug 'tpope/vim-speeddating'
 Plug 'nathanaelkane/vim-indent-guides'
+Plug 'jreybert/vimagit'
 if has("unix")
     let g:uname = system("uname")
     if g:uname == "Darwin\n"
@@ -164,6 +165,9 @@ nnoremap <leader>ff 1<C-G>
 
 " LanguageClient
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
+" Vimagit
+nnoremap <leader>mm :Magit<cr>
 
 " }}}
 " {{{ Plugin related
