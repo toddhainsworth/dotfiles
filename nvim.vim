@@ -44,6 +44,11 @@ Plug 'vim-scripts/utl.vim'
 Plug 'tpope/vim-speeddating'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'jreybert/vimagit'
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
 if has("unix")
     let g:uname = system("uname")
     if g:uname == "Darwin\n"
@@ -90,6 +95,11 @@ set completeopt=menuone,noinsert,noselect
 set shortmess+=c
 
 colorscheme minimalist
+
+" Help syntax highlighting keep up with large JS or TS files
+autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
+autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
+
 " }}}
 " {{{ Folding
 set foldmethod=marker
