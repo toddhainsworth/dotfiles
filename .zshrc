@@ -96,7 +96,6 @@ fi
 alias showme="nautilus"
 alias fixi3="xrandr --output HDMI1 --auto --right-of HDMI2"
 alias ff="find -name"
-alias composer.phar="composer"
 alias phpstorm="(~/bin/phpstorm/PhpStorm-162.1889.1/bin/phpstorm.sh &) && disown"
 alias www02ssh="ssh deploy@www02.aligent.com.au"
 alias c="clear"
@@ -108,7 +107,6 @@ alias mux="tmuxinator"
 alias v="./vessel"
 alias nv="nvim"
 alias gap="git add -p"
-alias eroma-deploy="git push cloud"
 alias mm="nv -c \"Magit\""
 
 # Serverless stuff
@@ -117,18 +115,6 @@ alias serverless='node-run serverless'
 alias sls-deploy-local='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js deploy --log --profile localstack --stage dev'
 alias sls-invoke='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js invoke --log --profile localstack --stage dev --function'
 alias sls-invoke-stepf='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js invoke stepf --log --profile localstack --stage dev --name'
-
-
-function grepFor() {
-  grep -Po '<string to search for>\K[^<next char>]+' exception.log|sort|uniq
-}
-
-function laranew() {
-  composer create-project --prefer-dist laravel/laravel $1 \
-    && cd $1 \
-    && composer require laravel/homestead --dev \
-    && php vendor/bin/homestead make;
-}
 
 export PATH=$PATH:/usr/local/go/bin
 export PATH=$PATH:$HOME/go/bin
