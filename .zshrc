@@ -109,7 +109,7 @@ alias v="./vessel"
 alias nv="nvim"
 alias gap="git add -p"
 alias eroma-deploy="git push cloud"
-alias emacs="emacs -nw"
+alias mm="nv -c \"Magit\""
 
 # Serverless stuff
 alias node-run='docker run --rm -it --volume ~/.aws:/home/node/.aws --volume ~/.npm:/home/node/.npm --volume $PWD:/app aligent/serverless'
