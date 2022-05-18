@@ -23,6 +23,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fireplace'
 Plug 'scrooloose/NERDTree'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -322,6 +323,10 @@ EOF
     endif
 endif
 
+" Fireplace
+autocmd BufEnter *.clj nnoremap <leader>EE :%Eval<cr>
+autocmd BufEnter *.clj nnoremap <leader>EP vap:Eval<cr>
+autocmd BufEnter *.clj vnoremap <leader>EE :Eval<cr>
 
 " }}}
 
