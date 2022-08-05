@@ -191,9 +191,17 @@ nnoremap <c-f> :Ag<cr>
 nnoremap <c-c> :Commits<cr>
 nnoremap <c-C> :BCommits<cr>
 if filereadable("vendor/")
-  let $FZF_DEFAULT_COMMAND = 'ag -g "" -U vendor/ ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+    if executable('ag')
+        let $FZF_DEFAULT_COMMAND = 'ag -g "" -U vendor/ ./'
+    else
+        let $FZF_DEFAULT_COMMAND = 'ack -g "" vendor ./'
+    end
 else
-  let $FZF_DEFAULT_COMMAND = 'ag -g "" -U ./' " Use AG for searching and makes ure to include 'vendor/' in that search
+    if executable('ag')
+        let $FZF_DEFAULT_COMMAND = 'ag -g "" -U ./'
+    else
+        let $FZF_DEFAULT_COMMAND = 'ack -g "" ./'
+    end
 endif
 
 " Fugitive

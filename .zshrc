@@ -87,6 +87,7 @@ export EDITOR='nvim'
 export PATH=$PATH:$HOME/.composer/vendor/bin
 export PATH=$PATH:$HOME/bin
 export PATH=$PATH:$HOME/.local/bin
+export PATH=$PATH:$HOME/.rvessel
 export DENO_INSTALL="/home/todd.hainsworth/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 if [[ "$OSTYPE" == "darwin"* ]]; then
