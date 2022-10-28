@@ -63,11 +63,7 @@ source $ZSH/oh-my-zsh.sh
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-export EDITOR='nvim'
-# else
-#   export EDITOR='mvim'
-# fi
+export EDITOR='~/psnl/nvim-linux64/bin/nvim'
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -106,7 +102,7 @@ alias weather="curl -4 http://wttr.in/Adelaide"
 alias reattach="tmux attach -t "
 alias mux="tmuxinator"
 alias v="./vessel"
-alias nv="nvim"
+alias nv="~/psnl/nvim-linux64/bin/nvim"
 alias gap="git add -p"
 alias mm="nv -c \"Magit\""
 
@@ -152,3 +148,6 @@ if [[ -d "$HOME/.phpenv/bin" ]]; then
     export PATH="$HOME/.phpenv/bin:$PATH"
     eval "$(phpenv init -)"
 fi
+
+# StarShip!
+eval "$(starship init zsh)"

@@ -50,6 +50,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
+Plug 'lervag/vimtex'
 if has("unix")
     let g:uname = system("uname")
     if g:uname == "Darwin\n"
@@ -335,6 +336,13 @@ endif
 autocmd BufEnter *.clj nnoremap <leader>EE :%Eval<cr>
 autocmd BufEnter *.clj nnoremap <leader>EP vap:Eval<cr>
 autocmd BufEnter *.clj vnoremap <leader>EE :Eval<cr>
+
+" LaTeX
+let g:tex_flavor='latex'
+let g:vimtex_view_method='zathura'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='abdmg'
 
 " }}}
 
