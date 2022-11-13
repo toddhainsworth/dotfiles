@@ -1,0 +1,16 @@
+session_name: work
+windows:
+  - window_name: eroma
+    panes: 
+      - cd magento
+      - ./vessel start
+    start_directory: ~/src/eroma-m2-dev
+  - window_name: polygon
+    panes: 
+      - cd magento
+      - ./vessel start
+    start_directory: ~/src/polygon-m2-dev
+  - window_name: misc
+    panes: 
+      -
+    start_directory: ~/
