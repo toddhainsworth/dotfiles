@@ -11,7 +11,8 @@ $python\
 $character"""
 
 [directory]
-style = "bright-black"
+style = "white"
+format = "[$path]($style) "
 
 [character]
 success_symbol = "[>](blue)"
@@ -19,7 +20,7 @@ error_symbol = "[>](blue)"
 vimcmd_symbol = "[<](blue)"
 
 [git_branch]
-format = "[$branch]($style)"
+format = "[$branch]($style) "
 style = "bright-black"
 
 [git_status]
