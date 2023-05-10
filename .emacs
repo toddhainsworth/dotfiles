@@ -31,12 +31,19 @@
 (eval-when-compile
   (require 'use-package))
 
+;; Evil because I'm not good at committing
 (use-package evil :ensure t
   :init (setq evil-undo-system 'undo-fu)
   :config (define-key evil-normal-state-map (kbd "B") 'evil-beginning-of-line)
 	  (define-key evil-normal-state-map (kbd "E") 'evil-end-of-line))
+
+;; Better undo stuff
 (use-package undo-fu :ensure t)
+
+;; IDO stuff
 (use-package ido-vertical-mode :ensure t)
+
+;; Ivy command manager (?)
 (use-package ivy :ensure t
   :config (setq ivy-use-virtual-buffers t)
 	  (setq ivy-use-selectable-prompt t)
@@ -48,8 +55,12 @@
 	  (define-key global-map (kbd "C-x C-f") 'counsel-find-file)
 	  (define-key global-map (kbd "C-x b") 'counsel-switch-buffer)
 	  (define-key ivy-minibuffer-map (kbd "C-<return>") 'ivy-immediate-done))
-(use-package fzf :ensure t)
 (use-package counsel :ensure t)
+
+;; FZF is my new favourite searcher... thing?
+(use-package fzf :ensure t)
+
+;; Projectile - Project Manager
 (use-package projectile :ensure t
 ;; So why doesn't this unignored change seem to work? :(
   :config (add-to-list 'projectile-globally-unignored-directories "*vendor*")
@@ -61,13 +72,19 @@
 	  (projectile-discover-projects-in-search-path)
 	  (setq projectile-completion-system 'counsel))
 (use-package counsel-projectile :ensure t)
+
+;; Company
 (use-package company :ensure t
   :config (setq company-dabbrev-downcase 0)
 	  (setq company-idle-delay 0))
+
+; key-chord so that I can `jj` to get out back to normal mode
 (use-package key-chord :ensure t
   :init (key-chord-mode 1)
   :config (setq key-chord-two-keys-delay 0.5)
 	  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state))
+
+;; Language modes
 (use-package php-mode :ensure t)
 (use-package web-mode :ensure t)
 (use-package toml-mode :ensure t)
@@ -78,16 +95,20 @@
   :config (add-to-list 'auto-mode-alist '("\\.graphqls$" . graphql-mode)))
 (use-package magit :ensure t
   :config (define-key global-map (kbd "C-x g") 'magit-status))
+
+;; Themes
 (use-package base16-theme :ensure t :config (load-theme 'base16-default-dark t))
+
+;; Support stuff
 (use-package exec-path-from-shell :ensure t :init (exec-path-from-shell-initialize))
 (use-package flycheck :ensure t :init (global-flycheck-mode))
+
+;; Let's configure!
+(setq inhibit-startup-screen t)
 
 ;; Evil mode >:D
 (require 'evil)
 (evil-mode t)
-
-;; Let's configure!
-(setq inhibit-startup-screen t)
 
 (menu-bar-mode 0)
 (tool-bar-mode 0)
