@@ -95,6 +95,7 @@
   :config (add-to-list 'auto-mode-alist '("\\.graphqls$" . graphql-mode)))
 (use-package magit :ensure t
   :config (define-key global-map (kbd "C-x g") 'magit-status))
+(use-package typescript-mode :ensure t)
 
 ;; Themes
 (use-package base16-theme :ensure t :config (load-theme 'base16-default-dark t))
