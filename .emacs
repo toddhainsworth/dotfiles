@@ -15,7 +15,7 @@
  '(custom-safe-themes
    '("5f824cddac6d892099a91c3f612fcf1b09bb6c322923d779216ab2094375c5ee" default))
  '(package-selected-packages
-   '(slime cider fzf fzf\.el magit-todos web-mode neotree flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company)))
+   '(## slime cider fzf fzf\.el magit-todos web-mode neotree flycheck exec-path-from-shell undo-fu graphql-mode base16-theme ivy counsel-projectile counsel use-package toml-mode rust-mode php-mode magit key-chord json-mode ivy-explorer ido-vertical-mode helm-projectile helm-ag evil-visual-mark-mode eglot company)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -60,19 +60,6 @@
 ;; FZF is my new favourite searcher... thing?
 (use-package fzf :ensure t)
 
-;; Projectile - Project Manager
-(use-package projectile :ensure t
-;; So why doesn't this unignored change seem to work? :(
-  :config (add-to-list 'projectile-globally-unignored-directories "*vendor*")
-	  (define-key global-map (kbd "s-p") 'fzf-find-file)
-	  (define-key global-map (kbd "s-P") 'counsel-projectile-switch-project)
-	  (define-key global-map (kbd "C-p") 'counsel-projectile-find-file)
-	  (define-key global-map (kbd "C-c C-p") 'projectile-command-map)
-	  (setq projectile-project-search-path '("~/src/"))
-	  (projectile-discover-projects-in-search-path)
-	  (setq projectile-completion-system 'counsel))
-(use-package counsel-projectile :ensure t)
-
 ;; Company
 (use-package company :ensure t
   :config (setq company-dabbrev-downcase 0)
@@ -85,7 +72,6 @@
 	  (key-chord-define evil-insert-state-map "jj" 'evil-normal-state))
 
 ;; Language modes
-(use-package php-mode :ensure t)
 (use-package web-mode :ensure t)
 (use-package toml-mode :ensure t)
 (use-package rust-mode :ensure t
@@ -131,11 +117,6 @@
 (set-default 'truncate-lines t)
 ;; Escape everywhere
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
-
-;; Projectile + Ivy/Counsel
-(defun projectile-project-vcs (&optional dir)
-  "Ignoring DIR - Do not treat anything as a VCS root, for some reason the unignored dirs feature doesn't work?"
-  'none)
 
 ;; Company-mode
 (add-hook 'after-init-hook 'global-company-mode)
