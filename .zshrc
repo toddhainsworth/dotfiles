@@ -91,7 +91,7 @@ export PATH=$PATH:$HOME/.rvessel
 export DENO_INSTALL="/home/todd.hainsworth/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH=$PATH:$HOME/Library/Python/3.8/bin
+  export PATH=$PATH:$HOME/Library/Python/3.8/bin
 fi
 
 alias showme="nautilus"
@@ -116,7 +116,29 @@ alias mm="nv -c \"Magit\""
 
 # Serverless stuff
 if [[ "$OSTYPE" != "darwin"* ]]; then
-  alias node-run='docker run --rm -it --volume ~/.aws:/home/node/.aws --volume ~/.npm:/home/node/.npm --volume $PWD:/app aligent/serverless'
+  determine_serverless_image() {
+    if [ -n "$ZSH_VERSION" ]; then
+      setopt local_options BASH_REMATCH # for ZSH compatiblity
+      setopt local_options KSH_ARRAYS # for ZSH compatiblity
+    fi
+
+    DEFAULT_IMAGE='aligent/serverless:latest'
+    NVM_RC=$(realpath .nvmrc)
+
+    if [ -s "$NVM_RC" ]; then
+      NODE_VERSION=$(<"$NVM_RC")
+
+      if [[ $NODE_VERSION =~ ^v?([0-9]+)(\.[0-9]+)?(\.[0-9]+)?$ ]]; then
+        echo "aligent/serverless:latest-node${BASH_REMATCH[1]}"
+        return 0
+      fi
+    fi
+
+    echo $DEFAULT_IMAGE
+    return 0
+  }
+
+  alias node-run='docker run --rm -it --volume ~/.aws:/home/node/.aws --volume ~/.azure:/home/node/.azure --volume ~/.npm:/home/node/.npm --volume $PWD:/app $(determine_serverless_image)'
   alias serverless='node-run serverless'
   alias sls-deploy-local='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js deploy --log --profile localstack --stage dev'
   alias sls-invoke='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js invoke --log --profile localstack --stage dev --function'
@@ -140,23 +162,23 @@ if [ -f "$LOCHOME/"'.magento-cloud/shell-config.rc' ]; then . "$LOCHOME/"'.magen
 source ~/bin/jump
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+  eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 eval "$(rbenv init - zsh)"
 
 # I've got some Pert dependencies as part of Neovim on macOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    PATH="/Users/toddhainsworth/perl5/bin${PATH:+:${PATH}}"; export PATH;
-    PERL5LIB="/Users/toddhainsworth/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-    PERL_LOCAL_LIB_ROOT="/Users/toddhainsworth/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-    PERL_MB_OPT="--install_base \"/Users/toddhainsworth/perl5\""; export PERL_MB_OPT;
-    PERL_MM_OPT="INSTALL_BASE=/Users/toddhainsworth/perl5"; export PERL_MM_OPT;
+  PATH="/Users/toddhainsworth/perl5/bin${PATH:+:${PATH}}"; export PATH;
+  PERL5LIB="/Users/toddhainsworth/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+  PERL_LOCAL_LIB_ROOT="/Users/toddhainsworth/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+  PERL_MB_OPT="--install_base \"/Users/toddhainsworth/perl5\""; export PERL_MB_OPT;
+  PERL_MM_OPT="INSTALL_BASE=/Users/toddhainsworth/perl5"; export PERL_MM_OPT;
 fi
 
 # PHPENV
 if [[ -d "$HOME/.phpenv/bin" ]]; then
-    export PATH="$HOME/.phpenv/bin:$PATH"
-    eval "$(phpenv init -)"
+  export PATH="$HOME/.phpenv/bin:$PATH"
+  eval "$(phpenv init -)"
 fi
 
 # StarShip!
