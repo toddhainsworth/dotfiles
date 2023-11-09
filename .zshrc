@@ -106,7 +106,11 @@ alias weather="curl -4 http://wttr.in/Adelaide"
 alias reattach="tmux attach -t "
 alias mux="tmuxinator"
 alias v="./vessel"
-alias nv="~/psnl/nvim-linux64/bin/nvim"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  alias nv="nvim"
+else
+  alias nv="~/psnl/nvim-linux64/bin/nvim"
+fi
 alias gap="git add -p"
 alias mm="nv -c \"Magit\""
 
