@@ -113,6 +113,7 @@ else
 fi
 alias gap="git add -p"
 alias mm="nv -c \"Magit\""
+alias lg="~/psnl/lazygit/lazygit"
 
 # Serverless stuff
 if [[ "$OSTYPE" != "darwin"* ]]; then
@@ -158,9 +159,6 @@ LOCHOME=${HOME:-'/home/todd.hainsworth'}
 export PATH="$LOCHOME/"'.magento-cloud/bin':"$PATH"
 if [ -f "$LOCHOME/"'.magento-cloud/shell-config.rc' ]; then . "$LOCHOME/"'.magento-cloud/shell-config.rc'; fi
 
-# AWS Jumphost stuff
-source ~/bin/jump
-
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
@@ -175,11 +173,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   PERL_MM_OPT="INSTALL_BASE=/Users/toddhainsworth/perl5"; export PERL_MM_OPT;
 fi
 
-# PHPENV
-if [[ -d "$HOME/.phpenv/bin" ]]; then
-  export PATH="$HOME/.phpenv/bin:$PATH"
-  eval "$(phpenv init -)"
-fi
-
 # StarShip!
 eval "$(starship init zsh)"
+alias traefik-restart="sudo docker restart traefik-reverse-proxy-1"
