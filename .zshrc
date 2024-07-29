@@ -112,7 +112,7 @@ else
   alias nv="~/psnl/nvim-linux64/bin/nvim"
 fi
 alias gap="git add -p"
-alias mm="nv -c \"Magit\""
+alias mm="nv -c \"Neogit\""
 alias lg="~/psnl/lazygit/lazygit"
 
 # Serverless stuff
