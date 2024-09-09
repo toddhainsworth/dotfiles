@@ -51,7 +51,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git grunt gulp node npm rbenv ruby vundle yum zsh-autosuggestions)
+plugins=(git node npm rbenv ruby vundle yum zsh-autosuggestions F-Sy-H aws)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -176,3 +176,6 @@ fi
 # StarShip!
 eval "$(starship init zsh)"
 alias traefik-restart="sudo docker restart traefik-reverse-proxy-1"
+
+# add Pulumi to the PATH
+export PATH=$PATH:/home/todd.hainsworth/.pulumi/bin

@@ -124,4 +124,4 @@
 (add-hook 'after-init-hook 'global-company-mode)
 
 ;; Org-mode
-(setq org-agenda-files (list "~/orgs/work.org" "~/orgs/home.org"))
+(setq org-agenda-files (list "~/orgs/work.org"))
