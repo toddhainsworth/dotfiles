@@ -106,14 +106,18 @@ alias weather="curl -4 http://wttr.in/Adelaide"
 alias reattach="tmux attach -t "
 alias mux="tmuxinator"
 alias v="./vessel"
+alias date-local='date +"%Y-%m-%dT%H:%M:%S.%3N"'
+alias date-utc='date -u +"%Y-%m-%dT%H:%M:%S.%3NZ"'
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias nv="nvim"
 else
   alias nv="~/psnl/nvim-linux64/bin/nvim"
+  alias nvim="~/psnl/nvim-linux64/bin/nvim"
 fi
 alias gap="git add -p"
 alias mm="nv -c \"Neogit\""
 alias lg="~/psnl/lazygit/lazygit"
+alias lazygit="~/psnl/lazygit/lazygit"
 
 # Serverless stuff
 if [[ "$OSTYPE" != "darwin"* ]]; then
@@ -175,6 +179,8 @@ fi
 
 # StarShip!
 eval "$(starship init zsh)"
+
+# Traefik
 alias traefik-restart="sudo docker restart traefik-reverse-proxy-1"
 
 # add Pulumi to the PATH

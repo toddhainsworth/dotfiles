@@ -1,0 +1,28 @@
+[general]
+import = [
+    "~/.config/alacritty/themes/themes/tokyo_night_enhanced.toml"
+]
+
+[env]
+TERM = "screen-256color"
+
+[window]
+decorations = "none"
+
+[scrolling]
+history = 10_000
+multiplier = 3
+
+[font]
+size = 10
+
+[debug]
+render_timer = false
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[selection]
+semantic_escape_chars = ",│`|:\"' ()[]{}<>"
+save_to_clipboard = false
