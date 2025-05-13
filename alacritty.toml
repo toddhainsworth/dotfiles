@@ -4,10 +4,10 @@ import = [
 ]
 
 [env]
-TERM = "screen-256color"
+TERM = "xterm-256color"
 
 [window]
-decorations = "none"
+# decorations = "none"
 
 [scrolling]
 history = 10_000
