@@ -184,3 +184,4 @@ alias traefik-restart="sudo docker restart traefik-reverse-proxy-1"
 
 # add Pulumi to the PATH
 export PATH=$PATH:/home/todd.hainsworth/.pulumi/bin
+eval "$(~/.local/bin/mise activate)"
