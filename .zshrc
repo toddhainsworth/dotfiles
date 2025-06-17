@@ -51,7 +51,7 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git node npm rbenv ruby vundle yum zsh-autosuggestions F-Sy-H aws)
+plugins=(git node npm ruby vundle yum zsh-autosuggestions F-Sy-H aws)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -166,7 +166,6 @@ if [ -f "$LOCHOME/"'.magento-cloud/shell-config.rc' ]; then . "$LOCHOME/"'.magen
 if [[ "$OSTYPE" == "darwin"* ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
-eval "$(rbenv init - zsh)"
 
 # I've got some Pert dependencies as part of Neovim on macOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -189,3 +188,5 @@ export PATH=$PATH:/home/todd.hainsworth/.pulumi/bin
 function cursor() {
     /home/todd.hainsworth/bin/cursor/AppRun </dev/null &>/dev/null $1 &
 }
+
+eval "$(~/.local/bin/mise activate)"
