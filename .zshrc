@@ -66,7 +66,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ "$OSTYPE" == "darwin"* ]]; then
   export EDITOR='nvim'
 else
-  export EDITOR='~/psnl/nvim-linux64/bin/nvim'
+  export EDITOR='~/psnl/nvim-linux64/usr/bin/nvim'
 fi
 
 # Compilation flags
@@ -111,8 +111,8 @@ alias date-utc='date -u +"%Y-%m-%dT%H:%M:%S.%3NZ"'
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias nv="nvim"
 else
-  alias nv="~/psnl/nvim-linux64/bin/nvim"
-  alias nvim="~/psnl/nvim-linux64/bin/nvim"
+  alias nv="~/psnl/nvim-linux64/usr/bin/nvim"
+  alias nvim="~/psnl/nvim-linux64/usr/bin/nvim"
 fi
 alias gap="git add -p"
 alias mm="nv -c \"Neogit\""
@@ -150,8 +150,8 @@ if [[ "$OSTYPE" != "darwin"* ]]; then
   alias sls-invoke-stepf='docker-compose exec -u node -w /app offline /serverless/node_modules/serverless/bin/serverless.js invoke stepf --log --profile localstack --stage dev --name'
 fi
 
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:$HOME/go/bin
+# Go!
+export PATH=$PATH:$HOME/bin/go/bin
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -185,3 +185,7 @@ alias traefik-restart="sudo docker restart traefik-reverse-proxy-1"
 
 # add Pulumi to the PATH
 export PATH=$PATH:/home/todd.hainsworth/.pulumi/bin
+
+function cursor() {
+    /home/todd.hainsworth/bin/cursor/AppRun </dev/null &>/dev/null $1 &
+}
