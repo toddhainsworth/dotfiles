@@ -25,9 +25,5 @@ Just symlink to `~/.config/starship.toml`
 ## Fish
 
 - Install Fisher: https://github.com/jorgebucaran/fisher
-- Install plugins:
-  - jorgebucaran/fisher
-  - jhillyerd/plugin-git
-  - ilancosman/tide@v6
-  - jorgebucaran/nvm.fish
+- Install plugins by symlinking `fish_plugins` to ~/.config/fish/fish_plugins
 
