@@ -163,10 +163,6 @@ LOCHOME=${HOME:-'/home/todd.hainsworth'}
 export PATH="$LOCHOME/"'.magento-cloud/bin':"$PATH"
 if [ -f "$LOCHOME/"'.magento-cloud/shell-config.rc' ]; then . "$LOCHOME/"'.magento-cloud/shell-config.rc'; fi
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
 # I've got some Pert dependencies as part of Neovim on macOS
 if [[ "$OSTYPE" == "darwin"* ]]; then
   PATH="/Users/toddhainsworth/perl5/bin${PATH:+:${PATH}}"; export PATH;
@@ -176,8 +172,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   PERL_MM_OPT="INSTALL_BASE=/Users/toddhainsworth/perl5"; export PERL_MM_OPT;
 fi
 
-# StarShip!
-eval "$(starship init zsh)"
+# # StarShip!
+# eval "$(starship init zsh)"
 
 # Traefik
 alias traefik-restart="sudo docker restart traefik-reverse-proxy-1"
@@ -189,4 +185,6 @@ function cursor() {
     /home/todd.hainsworth/bin/cursor/AppRun </dev/null &>/dev/null $1 &
 }
 
-eval "$(~/.local/bin/mise activate)"
+# add `code` command to PATH
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+# eval "$(~/.local/bin/mise activate)"
